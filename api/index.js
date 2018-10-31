@@ -46,12 +46,16 @@ moneyStock.belongsTo(typeStock,{as : 'type', foreignKey: 'typeStock_id'})
   
 //moneyStock.findAll({include: [ { model: typeStock, as: 'type' } ]}).then(function(res) {
  //   console.log(JSON.stringify(res))});
-
-sequelize.sync({ force: true })
+function syncDatabase() {
+  sequelize.sync({ force: true })
   .then(() => {
     console.log(`Database & tables created!`)
   })
+}
 
+//Sync dataase
+syncDatabase();
+//
 module.exports = {
     moneyStock,
     typeStock,
