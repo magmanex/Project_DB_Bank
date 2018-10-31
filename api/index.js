@@ -55,4 +55,13 @@ sequelize.sync({ force: true })
 module.exports = {
     moneyStock,
     typeStock,
+    calendar,
+    customers,
+    loan,
+    loanlist,
+    login,
+    officer,
+    requestlist,
+    tracking_has_loan,
+    tracking
 }
