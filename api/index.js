@@ -53,7 +53,7 @@ function syncDatabase() {
   })
 }
 
-//Sync dataase
+//Sync database (comment for not use)
 syncDatabase();
 //
 module.exports = {
