@@ -1,6 +1,15 @@
 const Sequelize = require('sequelize')
 const moneyStockModel = require('../model/moneystock')
 const typeStockModel = require('../model/typestock')
+const calendarModel = require('../model/calendar')
+const customersModel = require('../model/customers')
+const loanModel = require('../model/loan')
+const loanlistModel = require('../model/loanlist')
+const loginModel = require('../model/login')
+const officerModel = require('../model/officer')
+const requestlistModel = require('../model/requestlist')
+const trackinghasloanModel = require('../model/tracking_has_loan')
+const trackingModel = require('../model/tracking')
 
 
 const sequelize = new Sequelize('banking', 'root', '', {
@@ -20,6 +29,16 @@ const sequelize = new Sequelize('banking', 'root', '', {
 
 const moneyStock = moneyStockModel(sequelize, Sequelize)
 const typeStock= typeStockModel(sequelize, Sequelize)
+const calendar= calendarModel(sequelize, Sequelize)
+const customers= customersModel(sequelize, Sequelize)
+const loan= loanModel(sequelize, Sequelize)
+const loanlist= loanlistModel(sequelize, Sequelize)
+const login= loginModel(sequelize, Sequelize)
+const officer= officerModel(sequelize, Sequelize)
+const requestlist= requestlistModel(sequelize, Sequelize)
+const tracking_has_loan= trackinghasloanModel(sequelize, Sequelize)
+const tracking= trackingModel(sequelize, Sequelize)
+
 
 
 //ORM
