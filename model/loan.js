@@ -9,7 +9,7 @@ module.exports = (sequelize, type) => {
         amount: type.INTEGER,
         interestrate : type.INTEGER,
         payback : type.INTEGER,
-        time : type.DATETIME
+        time : type.DATE
        
 
     },{
