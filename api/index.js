@@ -13,6 +13,7 @@ const trackingModel = require('../model/tracking')
 
 //import data
 const typeStockData = require('../model/data/createTypeStock')
+const moneyStockData = require('../model/data/createMoneyStock')
 
 
 const sequelize = new Sequelize('banking', 'root', '', {
@@ -53,6 +54,7 @@ function syncDatabase() {
   sequelize.sync({ force: true })
   .then(() => {
     typeStockData.createTypeStock(typeStock)
+    moneyStockData.createMoneyStock(moneyStock)
     console.log(`Database & tables created!`)
   })
 }
