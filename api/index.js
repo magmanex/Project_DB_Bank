@@ -11,6 +11,9 @@ const requestlistModel = require('../model/requestlist')
 const trackinghasloanModel = require('../model/tracking_has_loan')
 const trackingModel = require('../model/tracking')
 
+//import data
+const typeStockData = require('../model/data/createTypeStock')
+
 
 const sequelize = new Sequelize('banking', 'root', '', {
   host: 'localhost',
@@ -49,6 +52,7 @@ moneyStock.belongsTo(typeStock,{as : 'type', foreignKey: 'typeStock_id'})
 function syncDatabase() {
   sequelize.sync({ force: true })
   .then(() => {
+    typeStockData.createTypeStock(typeStock)
     console.log(`Database & tables created!`)
   })
 }
