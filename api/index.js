@@ -12,6 +12,7 @@ const requestlistModel = require('../model/requestlist')
 //import data
 const typeStockData = require('../model/data/createTypeStock')
 const moneyStockData = require('../model/data/createMoneyStock')
+const customerData = require('../model/data/createCustomer')
 
 
 const sequelize = new Sequelize('banking', 'root', '', {
@@ -51,6 +52,7 @@ function syncDatabase() {
   .then(() => {
     typeStockData.createTypeStock(typeStock)
     moneyStockData.createMoneyStock(moneyStock)
+    customerData.createCustomer(customers)
     console.log(`Database & tables created!`)
   })
 }

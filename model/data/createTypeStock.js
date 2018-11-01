@@ -8,5 +8,7 @@ function createTypeStock(obj) {
     })
 }
 
-var TypeStock = [{id:null,description:"ลอง1"},
-                {id:null,description:"ลอง2"}]
+var TypeStock = [{id:null,description:"จ่ายเงินกู้"},
+                {id:null,description:"ถอนเงินกู้"},
+                {id:null,description:"ส่งทำลายธนาคารกลาง"},
+                {id:null,description:"รับเงินธนาคารกลาง"}]

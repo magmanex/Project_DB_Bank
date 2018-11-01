@@ -1,7 +1,7 @@
 module.exports = (sequelize, type) => {
     return sequelize.define('requestlist', {
         id: {
-          type: type.STRING,
+          type: type.INTEGER,
           primaryKey: true,
           autoIncrement: true
 
