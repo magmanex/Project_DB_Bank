@@ -8,8 +8,6 @@ const loanlistModel = require('../model/loanlist')
 const loginModel = require('../model/login')
 const officerModel = require('../model/officer')
 const requestlistModel = require('../model/requestlist')
-const trackinghasloanModel = require('../model/tracking_has_loan')
-const trackingModel = require('../model/tracking')
 
 //import data
 const typeStockData = require('../model/data/createTypeStock')
@@ -40,8 +38,6 @@ const loanlist= loanlistModel(sequelize, Sequelize)
 const login= loginModel(sequelize, Sequelize)
 const officer= officerModel(sequelize, Sequelize)
 const requestlist= requestlistModel(sequelize, Sequelize)
-const tracking_has_loan= trackinghasloanModel(sequelize, Sequelize)
-const tracking= trackingModel(sequelize, Sequelize)
 
 
 
@@ -59,7 +55,7 @@ function syncDatabase() {
   })
 }
 
-//Sync dataase
+//Sync database (comment for not use)
 syncDatabase();
 //
 module.exports = {
@@ -72,6 +68,5 @@ module.exports = {
     login,
     officer,
     requestlist,
-    tracking_has_loan,
-    tracking
+    
 }
