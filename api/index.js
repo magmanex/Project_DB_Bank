@@ -16,6 +16,7 @@ const customerData = require('../model/data/createCustomer')
 const requestListData = require('../model/data/createRequestlist')
 const loanData = require('../model/data/createLoan')
 const loanListData = require('../model/data/createLoanList')
+const officerData = require('../model/data/createOfficer')
 
 
 
@@ -48,7 +49,7 @@ const requestlist= requestlistModel(sequelize, Sequelize)
 
 //ORM
 moneyStock.belongsTo(typeStock,{as : 'type', foreignKey: 'typeStock_id'})
-  
+calendar.belongsTo(requestlist,{foreignKey: 'requestID' , targetKey:'id'})
 //moneyStock.findAll({include: [ { model: typeStock, as: 'type' } ]}).then(function(res) {
  //   console.log(JSON.stringify(res))});
 function syncDatabase() {
@@ -60,6 +61,7 @@ function syncDatabase() {
     requestListData.createRequestList(requestlist)
     loanData.createLoan(loan)
     loanListData.createLoanList(loanlist)
+    officerData.createOfficer(officer)
     console.log(`Database & tables created!`)
   })
 }
