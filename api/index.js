@@ -17,7 +17,7 @@ const requestListData = require('../model/data/createRequestlist')
 const loanData = require('../model/data/createLoan')
 const loanListData = require('../model/data/createLoanList')
 const officerData = require('../model/data/createOfficer')
-
+const calendarData = require('../model/data/createCalendar')
 
 
 const sequelize = new Sequelize('banking', 'root', '', {
@@ -48,13 +48,19 @@ const requestlist= requestlistModel(sequelize, Sequelize)
 
 
 //ORM
+//moneyStock
 moneyStock.belongsTo(typeStock,{as : 'type', foreignKey: 'typeStock_id'})
+
+//calendar
 calendar.belongsTo(requestlist,{foreignKey: 'requestID' , targetKey:'id'})
+calendar.belongsTo(officer,{foreignKey:'officerID' , targetKey:'id'})
+
+
 //moneyStock.findAll({include: [ { model: typeStock, as: 'type' } ]}).then(function(res) {
- //   console.log(JSON.stringify(res))});
 function syncDatabase() {
   sequelize.sync({ force: true })
   .then(() => {
+    //create Data
     typeStockData.createTypeStock(typeStock)
     moneyStockData.createMoneyStock(moneyStock)
     customerData.createCustomer(customers)
@@ -62,6 +68,7 @@ function syncDatabase() {
     loanData.createLoan(loan)
     loanListData.createLoanList(loanlist)
     officerData.createOfficer(officer)
+    calendarData.createCalendar(calendar)
     console.log(`Database & tables created!`)
   })
 }
