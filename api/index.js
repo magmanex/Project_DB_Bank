@@ -1,13 +1,16 @@
 const Sequelize = require('sequelize')
 const moneyStockModel = require('../model/moneystock')
 const typeStockModel = require('../model/typestock')
-const calendarModel = require('../model/calendar')
+
 const customersModel = require('../model/customers')
 const loanModel = require('../model/loan')
 const loanlistModel = require('../model/loanlist')
 const loginModel = require('../model/login')
 const officerModel = require('../model/officer')
 const requestlistModel = require('../model/requestlist')
+const calendar_crmModel = require('../model/calendar_crm')
+const calendar_debtModel = require('../model/calendar_debt')
+const promotionModel = require('../model/promotion')
 
 //import data
 const typeStockData = require('../model/data/createTypeStock')
@@ -37,23 +40,21 @@ const sequelize = new Sequelize('banking', 'root', '', {
 
 const moneyStock = moneyStockModel(sequelize, Sequelize)
 const typeStock= typeStockModel(sequelize, Sequelize)
-const calendar= calendarModel(sequelize, Sequelize)
+
 const customers= customersModel(sequelize, Sequelize)
 const loan= loanModel(sequelize, Sequelize)
 const loanlist= loanlistModel(sequelize, Sequelize)
 const login= loginModel(sequelize, Sequelize)
 const officer= officerModel(sequelize, Sequelize)
 const requestlist= requestlistModel(sequelize, Sequelize)
-
+const calendar_crm= calendar_crmModel(sequelize, Sequelize)
+const calendar_debt= calendar_debtModel(sequelize, Sequelize)
+const promotion= promotionModel(sequelize, Sequelize)
 
 
 //ORM
 //moneyStock
 moneyStock.belongsTo(typeStock,{as : 'type', foreignKey: 'typeStock_id'})
-
-//calendar
-calendar.belongsTo(requestlist,{foreignKey: 'requestID' , targetKey:'id'})
-calendar.belongsTo(officer,{foreignKey:'officerID' , targetKey:'id'})
 
 
 //moneyStock.findAll({include: [ { model: typeStock, as: 'type' } ]}).then(function(res) {
@@ -68,7 +69,7 @@ function syncDatabase() {
     loanData.createLoan(loan)
     loanListData.createLoanList(loanlist)
     officerData.createOfficer(officer)
-    calendarData.createCalendar(calendar)
+    
     console.log(`Database & tables created!`)
   })
 }
@@ -79,12 +80,15 @@ syncDatabase();
 module.exports = {
     moneyStock,
     typeStock,
-    calendar,
+   
     customers,
     loan,
     loanlist,
     login,
     officer,
     requestlist,
+    calendar_crm,
+    calendar_debt,
+    promotion,
     
 }

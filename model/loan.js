@@ -8,8 +8,9 @@ module.exports = (sequelize, type) => {
         status : type.STRING,
         amount: type.INTEGER,
         interestrate : type.INTEGER,
-        payback : type.INTEGER,
-        time : type.DATE
+        totalamount : type.INTEGER,
+        time : type.DATE,
+        debt_id : type.INTEGER
        
 
     },{
