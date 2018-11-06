@@ -56,6 +56,20 @@ const promotion= promotionModel(sequelize, Sequelize)
 //moneyStock
 moneyStock.belongsTo(typeStock,{as : 'type', foreignKey: 'typeStock_id'})
 
+ requestlist.belongsTo(promotion,{foreignKey: 'promotion_id' , targetKey: 'id'  })
+ requestlist.belongsTo(customers,{foreignKey: 'customers_id' ,  targetKey: 'id'  })
+ login.belongsTo(customers,{ foreignKey: 'customers_id' , targetKey: 'id' })
+ login.belongsTo(officer,{ foreignKey: 'officer_ id' ,  targetKey: 'id' })
+ calendar_crm.belongsTo(requestlist,{ foreignKey: 'requestlist_id' , targetKey: 'id'})
+ calendar_crm.belongsTo(officer,{foreignKey:'officer_id' , targetKey: 'id'})
+ calendar_debt.belongsTo(officer,{foreignKey: 'officer_id' , targetKey: 'id'})
+ calendar_debt.belongsTo(loan,{foreignKey: 'loan_id' , targetKey: 'id'})
+ loanlist.belongsTo(loan,{foreignKey:'loan_id' , targetKey:'id'})
+ moneyStock.belongsTo(loanlist,{foreignKey:'loanlist_id' , targetKey: 'id'})
+ moneyStock.belongsTo(loanlist,{foreignKey:'loanlist_id_fromloan' , targetKey: 'loan_id'})
+
+
+
 
 //moneyStock.findAll({include: [ { model: typeStock, as: 'type' } ]}).then(function(res) {
 function syncDatabase() {
