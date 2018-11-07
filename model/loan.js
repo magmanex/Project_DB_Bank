@@ -9,8 +9,7 @@ module.exports = (sequelize, type) => {
         amount: type.INTEGER,
         interestrate : type.INTEGER,
         totalamount : type.INTEGER,
-        time : type.DATE,
-        debt_id : type.INTEGER
+        time : type.DATE
     },{
         tableName: 'loan',
         createdAt: false,
