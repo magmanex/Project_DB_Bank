@@ -8,7 +8,6 @@ module.exports = (sequelize, type) => {
         },
         asset: type.STRING,
         amount: type.INTEGER,
-        campaign : type.STRING,
         date: type.DATE
        
     },{

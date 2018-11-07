@@ -3,13 +3,12 @@ module.exports = {
 }
 
 function createPromotion(obj) {
-    loanList.forEach((item) => {
+    promotion.forEach((item) => {
         obj.create(
             {
                 id:item.id,
-                amount:item.amount,
-                DATE:item.DATE,
-                loanleft:item.loanleft
+                name:item.name,
+                detail:item.detail
             })
     })
 }
@@ -17,13 +16,11 @@ function createPromotion(obj) {
 var promotion = [
                 {
                     id:1,
-                    amount:1000,
-                    DATE:"2017-06-15",
-                    loanleft:200
+                    name:"ลดแค่นี้ หนี้บาน",
+                    detail:"ลองเฉยๆ"
                 },                    
                 {
                     id:2,
-                    amount:1000,
-                    DATE:"2017-06-15",
-                    loanleft:200}
+                    name:"หนี้น้อย นั่งร้อยมาลัย",
+                    detail:"ลองรอบ2"}
                 ]

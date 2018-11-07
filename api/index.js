@@ -23,6 +23,7 @@ const loginData = require('../model/data/createLogin')
 const officerData = require('../model/data/createOfficer')
 const calendarCRMData = require('../model/data/createCalendar_crm')
 const calendarDeptData = require('../model/data/createCalendar_dept')
+const promotionData = require('../model/data/createPromotion')
 
 
 
@@ -93,13 +94,14 @@ function syncDatabase() {
   .then(() => {
     //create Data
     officerData.createOfficer(officer)
+    promotionData.createPromotion(promotion)
     typeStockData.createTypeStock(typeStock)
     moneyStockData.createMoneyStock(moneyStock)
     customerData.createCustomer(customers)
-    requestListData.createRequestList(requestlist)
     loanData.createLoan(loan)
     loanListData.createLoanList(loanlist)
     loginData.createLogin(login)
+    requestListData.createRequestList(requestlist)
     calendarDeptData.createCalendarDept(calendar_debt)
     calendarCRMData.createCalendarCRM(calendar_crm)
 
