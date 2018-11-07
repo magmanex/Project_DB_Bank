@@ -20,7 +20,9 @@ const requestListData = require('../model/data/createRequestlist')
 const loanData = require('../model/data/createLoan')
 const loanListData = require('../model/data/createLoanList')
 const officerData = require('../model/data/createOfficer')
-const calendarData = require('../model/data/createCalendar')
+const calendarCRMData = require('../model/data/createCalendar_crm')
+const calendarDeptData = require('../model/data/createCalendar_dept')
+
 
 
 const sequelize = new Sequelize('banking', 'root', '', {
@@ -56,17 +58,28 @@ const promotion= promotionModel(sequelize, Sequelize)
 //moneyStock
 moneyStock.belongsTo(typeStock,{as : 'type', foreignKey: 'typeStock_id'})
 
- requestlist.belongsTo(promotion,{foreignKey: 'promotion_id' , targetKey: 'id'  })
- requestlist.belongsTo(customers,{foreignKey: 'customers_id' ,  targetKey: 'id'  })
- login.belongsTo(customers,{ foreignKey: 'customers_id' , targetKey: 'id' })
- login.belongsTo(officer,{ foreignKey: 'officer_ id' ,  targetKey: 'id' })
- calendar_crm.belongsTo(requestlist,{ foreignKey: 'requestlist_id' , targetKey: 'id'})
- calendar_crm.belongsTo(officer,{foreignKey:'officer_id' , targetKey: 'id'})
- calendar_debt.belongsTo(officer,{foreignKey: 'officer_id' , targetKey: 'id'})
- calendar_debt.belongsTo(loan,{foreignKey: 'loan_id' , targetKey: 'id'})
- loanlist.belongsTo(loan,{foreignKey:'loan_id' , targetKey:'id'})
- moneyStock.belongsTo(loanlist,{foreignKey:'loanlist_id' , targetKey: 'id'})
- moneyStock.belongsTo(loanlist,{foreignKey:'loanlist_id_fromloan' , targetKey: 'loan_id'})
+//requestlist
+requestlist.belongsTo(promotion,{foreignKey: 'promotion_id' , targetKey: 'id'  })
+requestlist.belongsTo(customers,{foreignKey: 'customers_id' ,  targetKey: 'id'  })
+
+//login
+login.belongsTo(customers,{ foreignKey: 'customers_id' , targetKey: 'id' })
+login.belongsTo(officer,{ foreignKey: 'officer_ id' ,  targetKey: 'id' })
+
+//calendar crm
+calendar_crm.belongsTo(officer,{foreignKey:'officer_id' , targetKey: 'id'})
+calendar_crm.belongsTo(requestlist,{ foreignKey: 'requestlist_id' , targetKey: 'id'})
+
+//calendar dept
+calendar_debt.belongsTo(officer,{foreignKey: 'officer_id' , targetKey: 'id'})
+calendar_debt.belongsTo(loan,{foreignKey: 'loan_id' , targetKey: 'id'})
+
+//loanlist
+loanlist.belongsTo(loan,{foreignKey:'loan_id' , targetKey:'id'})
+
+//moneystock
+moneyStock.belongsTo(loanlist,{foreignKey:'loanlist_id' , targetKey: 'id'})
+moneyStock.belongsTo(loanlist,{foreignKey:'loanlist_id_fromloan' , targetKey: 'loan_id'})
 
 
 
@@ -76,14 +89,16 @@ function syncDatabase() {
   sequelize.sync({ force: true })
   .then(() => {
     //create Data
+    officerData.createOfficer(officer)
     typeStockData.createTypeStock(typeStock)
     moneyStockData.createMoneyStock(moneyStock)
     customerData.createCustomer(customers)
     requestListData.createRequestList(requestlist)
     loanData.createLoan(loan)
     loanListData.createLoanList(loanlist)
-    officerData.createOfficer(officer)
-    
+    calendarDeptData.createCalendarDept(calendar_debt)
+    calendarCRMData.createCalendarCRM(calendar_crm)
+
     console.log(`Database & tables created!`)
   })
 }
@@ -93,8 +108,7 @@ syncDatabase();
 //
 module.exports = {
     moneyStock,
-    typeStock,
-   
+    typeStock,   
     customers,
     loan,
     loanlist,
