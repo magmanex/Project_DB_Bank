@@ -10,8 +10,10 @@ function createLoan(obj) {
                 status:item.status,
                 amount:item.amount,
                 interestrate:item.interestrate,
-                payback:item.payback,
-                time:item.time
+                totalamount:item.totalamount,
+                time:item.time,
+                officer_id:item.officer_id,
+                debt_id:item.debt_id
             })
     })
 }
@@ -22,13 +24,17 @@ var loan = [
                     status:"จ่ายไม่ครบ",
                     amount:1000,
                     interestrate:2000,
-                    payback:200,
-                    time:"2017-06-15"},
+                    totalamount:200,
+                    time:"2017-06-15",
+                    officer_id:1,
+                    debt_id:2},
                 {
                     id:2,
-                    status:"แสนมี",
+                    status:"ครบแล้วมั้ง",
                     amount:2000,
                     interestrate:3000,
-                    payback:3400,
-                    time:"2017-06-15"}
+                    totalamount:3400,
+                    time:"2017-06-15",
+                    officer_id:1,
+                    debt_id:2}
                 ]

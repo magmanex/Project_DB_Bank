@@ -9,7 +9,8 @@ function createLoanList(obj) {
                 id:item.id,
                 amount:item.amount,
                 DATE:item.DATE,
-                loanleft:item.loanleft
+                loanleft:item.loanleft,
+                loan_id:item.loan_id
             })
     })
 }
@@ -19,11 +20,13 @@ var loanList = [
                     id:1,
                     amount:1000,
                     DATE:"2017-06-15",
-                    loanleft:200
+                    loanleft:200,
+                    loan_id:1
                 },                    
                 {
                     id:2,
                     amount:1000,
                     DATE:"2017-06-15",
-                    loanleft:200}
+                    loanleft:200,
+                    loan_id:2}
                 ]
