@@ -68,7 +68,7 @@ moneyStock.belongsTo(typeStock,{as : 'type', foreignKey: 'typeStock_id'})
  moneyStock.belongsTo(loanlist,{foreignKey:'loanlist_id' , targetKey: 'id'})
  moneyStock.belongsTo(loanlist,{foreignKey:'loanlist_id_fromloan' , targetKey: 'loan_id'})
  loan.belongsTo(officer,{foreignKey:'officer_id' , targetKey: 'id'})
-
+ loan.belongsTo(officer,{foreignKey:'debt_id' , targetKey: 'id'})
 
 
 
