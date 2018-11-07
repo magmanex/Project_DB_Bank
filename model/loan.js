@@ -11,8 +11,6 @@ module.exports = (sequelize, type) => {
         totalamount : type.INTEGER,
         time : type.DATE,
         debt_id : type.INTEGER
-       
-
     },{
         tableName: 'loan',
         createdAt: false,
