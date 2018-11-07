@@ -19,6 +19,7 @@ const customerData = require('../model/data/createCustomer')
 const requestListData = require('../model/data/createRequestlist')
 const loanData = require('../model/data/createLoan')
 const loanListData = require('../model/data/createLoanList')
+const loginData = require('../model/data/createLogin')
 const officerData = require('../model/data/createOfficer')
 const calendarCRMData = require('../model/data/createCalendar_crm')
 const calendarDeptData = require('../model/data/createCalendar_dept')
@@ -64,7 +65,7 @@ requestlist.belongsTo(customers,{foreignKey: 'customers_id' ,  targetKey: 'id'  
 
 //login
 login.belongsTo(customers,{ foreignKey: 'customers_id' , targetKey: 'id' })
-login.belongsTo(officer,{ foreignKey: 'officer_ id' ,  targetKey: 'id' })
+login.belongsTo(officer,{ foreignKey: 'officer_id' ,  targetKey: 'id' })
 
 //calendar crm
 calendar_crm.belongsTo(officer,{foreignKey:'officer_id' , targetKey: 'id'})
@@ -96,6 +97,7 @@ function syncDatabase() {
     requestListData.createRequestList(requestlist)
     loanData.createLoan(loan)
     loanListData.createLoanList(loanlist)
+    loginData.createLogin(login)
     calendarDeptData.createCalendarDept(calendar_debt)
     calendarCRMData.createCalendarCRM(calendar_crm)
 
