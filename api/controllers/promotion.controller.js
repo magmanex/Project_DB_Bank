@@ -1,7 +1,8 @@
 const db = require('../index')
 
 exports.findAll = (req, res) => {
-    db.promotion.findAll({include: [ { model: db.typeStock, as: 'type' }] } ).then(stock => res.json(stock))
+	db.promotion
+	.findAll().then(stock => res.json(stock))
 }
 
 
@@ -9,9 +10,9 @@ exports.findAll = (req, res) => {
 exports.create = (req, res) => {
     //Id is auto increment
     db.promotion.create({  
-            amount: req.body.amount,
-            total: req.body.total,
-            typeStock_id : req.body.typeStock_id
+        name: req.body.name,
+        detail :req.body.detail
+          
         })
         .then(data => {		
             res.json(data);
@@ -43,9 +44,9 @@ exports.update = (req, res) => {
 					});
 				}
 				return stock.update({
-                                amount: req.body.amount,
-                                total: req.body.total,
-                                typeStock_id : req.body.typeStock_id
+                    name: req.body.name,
+                    detail :req.body.detail
+                      
 									},{ 
                                         where: { id: req.params.id } 
                                     })
@@ -55,3 +56,20 @@ exports.update = (req, res) => {
 			)
 		.catch((error) => res.status(400).send(error));			 
 };
+
+
+exports.delete = () => {
+    db.promotion
+	.findById(req.params.Id)
+	.then(pro => {
+		if(!pro) {
+			return res.status(400).send({
+				message: 'promotion Not Found',
+			});
+		}
+ 
+		return pro.destroy()
+				.then(() => res.status(200).json({message: "Destroy successfully!"}))
+				.catch(error => res.status(400).send(error));
+	})
+}

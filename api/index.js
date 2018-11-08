@@ -93,14 +93,14 @@ async function create(){
   await officerData.createOfficer(officer)
   await promotionData.createPromotion(promotion)
   await typeStockData.createTypeStock(typeStock)
+  await moneyStockData.createMoneyStock(moneyStock)
   await customerData.createCustomer(customers)
   await loanData.createLoan(loan)
-  await loanListData.createLoanList(loanlist)
   await loginData.createLogin(login)
   await requestListData.createRequestList(requestlist)
   await calendarDeptData.createCalendarDept(calendar_debt)
+  await loanListData.createLoanList(loanlist)
   await calendarCRMData.createCalendarCRM(calendar_crm)
-  await moneyStockData.createMoneyStock(moneyStock)
   }
 function syncDatabase() {
   sequelize.sync({ force: true })

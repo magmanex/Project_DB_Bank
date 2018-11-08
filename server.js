@@ -5,6 +5,9 @@ const db = require('./api/index')
 
 
 const moneystock = require('./api/controllers/moneystock.controller');
+const promotion = require('./api/controllers/promotion.controller');
+const officer = require('./api/controllers/officer.controller');
+const requestlist = require('./api/controllers/requestlist.controller');
 
 
 const app = express()
@@ -19,20 +22,39 @@ app.use('/home',function(req,res){
    
 });
 
-///CRUD
+///Rest API
 
 //Find All
 app.get('/api/moneystock', moneystock.findAll);
-
-//Create
 app.post('/api/moneystock', moneystock.create);
-
-//Find by Id
 app.get('/api/moneystock/:Id', moneystock.findById);
-//Update
 app.put('/api/moneystock/:Id', moneystock.update);
 
-//*Delete
+app.get('/api/promotion', promotion.findAll);
+app.post('/api/promotion', promotion.create);
+app.get('/api/promotion/:Id', promotion.findById);
+app.put('/api/promotion/:Id', promotion.update);
+app.delete('/api/promotion/:Id',promotion.delete);
+
+
+app.get('/api/officer', officer.findAll);
+app.post('/api/officer', officer.create);
+app.get('/api/officer/:Id', officer.findById);
+app.put('/api/officer/:Id', officer.update);
+app.delete('/api/officer/:Id',officer.delete);
+
+app.get('/api/requestlist', requestlist.findAll);
+app.post('/api/requestlist', requestlist.create);
+app.get('/api/requestlist/:Id', requestlist.findById);
+app.put('/api/requestlist/:Id', requestlist.update);
+app.delete('/api/requestlist/:Id',requestlist.delete);
+
+app.get('/api/requestlist', requestlist.findAll);
+app.post('/api/requestlist', requestlist.create);
+app.get('/api/requestlist/:Id', requestlist.findById);
+app.put('/api/requestlist/:Id', requestlist.update);
+app.delete('/api/requestlist/:Id',requestlist.delete);
+
 
 //Server
 const port = 8080

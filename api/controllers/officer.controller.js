@@ -1,17 +1,21 @@
 const db = require('../index')
 
 exports.findAll = (req, res) => {
-    db.officer.findAll({include: [ { model: db.typeStock, as: 'type' }] } ).then(stock => res.json(stock))
+    db.officer.findAll( ).then(stock => res.json(stock))
 }
 
 
 //Create
 exports.create = (req, res) => {
     //Id is auto increment
+    console.log( req.body.firstname)
     db.officer.create({  
-            amount: req.body.amount,
-            total: req.body.total,
-            typeStock_id : req.body.typeStock_id
+        firstname : req.body.firstname,
+        surname : req.body.surname,
+        dob : req.body.dob,
+        gender : req.body.gender,
+        jobtitle : req.body.jobtitle
+         
         })
         .then(data => {		
             res.json(data);
@@ -43,9 +47,12 @@ exports.update = (req, res) => {
 					});
 				}
 				return stock.update({
-                                amount: req.body.amount,
-                                total: req.body.total,
-                                typeStock_id : req.body.typeStock_id
+                    firstname : req.body.firstname,
+                    surname : req.body.surname,
+                    dob : req.body.dob,
+                    gender : req.body.gender,
+                    jobtitle : req.body.jobtitle
+                     
 									},{ 
                                         where: { id: req.params.id } 
                                     })
@@ -55,3 +62,21 @@ exports.update = (req, res) => {
 			)
 		.catch((error) => res.status(400).send(error));			 
 };
+
+
+
+exports.delete = (req, res) => {
+    db.officer
+	.findById(req.params.Id)
+	.then(pro => {
+		if(!pro) {
+			return res.status(400).send({
+				message: 'officer Not Found',
+			});
+		}
+ 
+		return pro.destroy()
+				.then(() => res.status(200).json({message: "Destroy successfully!"}))
+				.catch(error => res.status(400).send(error));
+	})
+}

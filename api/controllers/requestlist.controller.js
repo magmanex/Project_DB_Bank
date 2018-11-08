@@ -55,3 +55,20 @@ exports.update = (req, res) => {
 			)
 		.catch((error) => res.status(400).send(error));			 
 };
+
+
+exports.delete = () => {
+    db.requestlist
+	.findById(req.params.Id)
+	.then(obj => {
+		if(!obj) {
+			return res.status(400).send({
+				message: 'requestlist Not Found',
+			});
+		}
+ 
+		return obj.destroy()
+				.then(() => res.status(200).json({message: "Destroy successfully!"}))
+				.catch(error => res.status(400).send(error));
+	})
+}
