@@ -1,7 +1,11 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const path = require('path');
-const { moneyStock, typeStock } = require('./api/index')
+const db = require('./api/index')
+
+
+const moneystock = require('./api/controllers/moneystock.controller');
+
 
 const app = express()
 
@@ -15,11 +19,22 @@ app.use('/home',function(req,res){
    
 });
 
+///CRUD
 
+//Find All
+app.get('/api/moneystock', moneystock.findAll);
 
-app.get('/api/moneystock', (req, res) => {
-    moneyStock.findAll({include: [ { model: typeStock, as: 'type' }] } ).then(stock => res.json(stock))
-})
+//Create
+app.post('/api/moneystock', moneystock.create);
+
+//Find by Id
+app.get('/api/moneystock/:Id', moneystock.findById);
+//Update
+app.put('/api/moneystock/:Id', moneystock.update);
+
+//*Delete
+
+//Server
 const port = 8080
 app.listen(port, () => {
     console.log(`Running on http://localhost:${port}`)

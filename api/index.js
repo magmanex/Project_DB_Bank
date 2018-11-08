@@ -89,21 +89,24 @@ moneyStock.belongsTo(loanlist,{foreignKey:'loanlist_id_fromloan' , targetKey: 'l
 
 
 //moneyStock.findAll({include: [ { model: typeStock, as: 'type' } ]}).then(function(res) {
+async function create(){
+  await officerData.createOfficer(officer)
+  await promotionData.createPromotion(promotion)
+  await typeStockData.createTypeStock(typeStock)
+  await customerData.createCustomer(customers)
+  await loanData.createLoan(loan)
+  await loanListData.createLoanList(loanlist)
+  await loginData.createLogin(login)
+  await requestListData.createRequestList(requestlist)
+  await calendarDeptData.createCalendarDept(calendar_debt)
+  await calendarCRMData.createCalendarCRM(calendar_crm)
+  await moneyStockData.createMoneyStock(moneyStock)
+  }
 function syncDatabase() {
   sequelize.sync({ force: true })
   .then(() => {
     //create Data
-    officerData.createOfficer(officer)
-    promotionData.createPromotion(promotion)
-    typeStockData.createTypeStock(typeStock)
-    moneyStockData.createMoneyStock(moneyStock)
-    customerData.createCustomer(customers)
-    loanData.createLoan(loan)
-    loanListData.createLoanList(loanlist)
-    loginData.createLogin(login)
-    requestListData.createRequestList(requestlist)
-    calendarDeptData.createCalendarDept(calendar_debt)
-    calendarCRMData.createCalendarCRM(calendar_crm)
+    create()
 
     console.log(`Database & tables created!`)
   })
