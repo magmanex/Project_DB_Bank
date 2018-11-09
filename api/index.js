@@ -72,13 +72,10 @@ login.belongsTo(officer,{ foreignKey: 'officer_id' ,  targetKey: 'id' })
 calendar_crm.belongsTo(officer,{foreignKey:'officer_id' , targetKey: 'id'})
 calendar_crm.belongsTo(requestlist,{ foreignKey: 'requestlist_id' , targetKey: 'id'})
 
-//calendar dept
-calendar_debt.belongsTo(officer,{foreignKey: 'officer_id' , targetKey: 'id'})
-calendar_debt.belongsTo(loan,{foreignKey: 'loan_id' , targetKey: 'id'})
-
 //loan
 loan.belongsTo(officer,{foreignKey:'officer_id' , targetKey: 'id'})
 loan.belongsTo(officer,{foreignKey:'debt_id' , targetKey: 'id'})
+loan.belongsTo(customers,{foreignKey:'customers_id' , targetKey: 'id'})
 
 //loanlist
 loanlist.belongsTo(loan,{foreignKey:'loan_id' , targetKey:'id'})
@@ -87,6 +84,9 @@ loanlist.belongsTo(loan,{foreignKey:'loan_id' , targetKey:'id'})
 moneyStock.belongsTo(loanlist,{foreignKey:'loanlist_id' , targetKey: 'id'})
 moneyStock.belongsTo(loanlist,{foreignKey:'loanlist_id_fromloan' , targetKey: 'loan_id'})
 
+//calendar dept
+calendar_debt.belongsTo(officer,{foreignKey: 'officer_id' , targetKey: 'id'})
+calendar_debt.belongsTo(loan,{foreignKey: 'loan_id' , targetKey: 'id'})
 
 //moneyStock.findAll({include: [ { model: typeStock, as: 'type' } ]}).then(function(res) {
 async function create(){
