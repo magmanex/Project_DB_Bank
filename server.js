@@ -8,6 +8,7 @@ const moneystock = require('./api/controllers/moneystock.controller');
 const promotion = require('./api/controllers/promotion.controller');
 const officer = require('./api/controllers/officer.controller');
 const requestlist = require('./api/controllers/requestlist.controller');
+const loan = require('./api/controllers/loan.controller');
 
 
 const app = express()
@@ -55,6 +56,7 @@ app.get('/api/requestlist/:Id', requestlist.findById);
 app.put('/api/requestlist/:Id', requestlist.update);
 app.delete('/api/requestlist/:Id',requestlist.delete);
 
+app.get('/api/loan' , loan.findAll);
 
 //Server
 const port = 8080
