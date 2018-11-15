@@ -168,7 +168,28 @@
 		<!-- Scrolling Nav JavaScript -->
 		<script src="../js/jquery.easing.min.js"></script>
         <script src="../js/scrolling-nav.js"></script>		
+
+        
         
         <script>
             $("#header").load("../header.html");
+            function alertStatement(link) {
+                var url = new URL(link);
+                var id = url.searchParams.get("id");
+                if(id !== null){
+                    console.log(id);
+                    $.post("../api/loanlist/" + id) , 
+                    function (data) {
+                        console.log(data);
+                    }
+                } else {
+                    console.log("not have id")
+                }
+            }
+
+            $( document ).ready(function() {
+               alertStatement(window.location.href); 
+            });
+
+
         </script>

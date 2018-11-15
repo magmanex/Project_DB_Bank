@@ -21,8 +21,9 @@ exports.create = (req, res) => {
 
 //Find by Id
 exports.findById = (req, res) => {
-
-    db.loanlist.findById(req.params.Id)
+    db.loanlist.findAll({
+        where: {loan_id: req.params.Id}
+    })
     .then(stock => {
             if (!stock){
                 return res.status(404).json({message: "Stock Not Found"})

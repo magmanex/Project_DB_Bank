@@ -9,6 +9,7 @@ const promotion = require('./api/controllers/promotion.controller');
 const officer = require('./api/controllers/officer.controller');
 const requestlist = require('./api/controllers/requestlist.controller');
 const loan = require('./api/controllers/loan.controller');
+const loanlist = require('./api/controllers/loanlist.controller');
 
 const app = express()
 
@@ -58,6 +59,7 @@ app.delete('/api/requestlist/:Id',requestlist.delete);
 app.get('/api/loan' , loan.findAll);
 app.post('/api/loan' , loan.create);
 
+app.post('/api/loanlist/:Id' , loanlist.findById)
 
 //Server
 const port = 8080
