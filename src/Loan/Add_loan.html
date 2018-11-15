@@ -80,7 +80,7 @@
                 <div class="form-group has-feedback">
                         <label class="col-lg-3 control-label">Document No.</label>
                         <div class="col-lg-3">
-                            <input type="text" class="form-control" id="company" value="" readonly>
+                            <input type="text" class="form-control" id="id" value="" readonly>
                         </div>
                         <label class="col-lg-3 control-label">วันที่</label>
                         <div class="col-lg-3">
@@ -92,21 +92,34 @@
                 <div class="form-group has-feedback">
                         <label class="col-lg-3 control-label">จำนวนเงิน</label>
                         <div class="col-lg-3">
-                            <input type="text" class="form-control" id="company" value="" >
+                            <input type="text" class="form-control" id="money1" value="" >
                         </div>
                         <label class="col-lg-3 control-label">ยืนยันจำนวนเงิน</label>
                         <div class="col-lg-3">
-                            <input type="text" class="form-control" id="date_po" value="" >
+                            <input type="text" class="form-control" id="money2" value="" >
                         </div>
                 </div>
                 <br>
                 <br>
                 <div align="right">
-                    <a href="#" class="btn">เพิ่มรายการ</a>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id="add_list">เพิ่มรายการ</button>
                     <a href="#" class="btn">ยกเลิกรายการ</a>
                 </div>
 				<div class="row">                    
 				<div class="col-sm-12">
+                    <hr>
+                        <table id = "new_data">
+                                <tr>
+                                  <th><center>
+                                        <label>
+                                            <input type="checkbox" id="checkAll"><span class="text"></span>
+                                        </label> All
+                                    </center></th>
+                                  <th><center>ลำดับ</center></th>
+                                  <th><center>จำนวนเงิน</center></th>
+                                  <th><center>สร้างโดย</center></th>
+                                </tr>
+                              </table>	
                         <hr>
                         <table id = "old_data">
                             <tr>
@@ -175,15 +188,31 @@
                                 <td><center>`+ element.loanleft+`</center></td>
                                 <td><center>`+ element.loan_id+`</center></td> </tr>`;
                         })
+                        $("#id").val(id);
                         $("#old_data").append(tmp);
                     });
                 } else {
+                    $("#old_data").hide();
                     console.log("not have id")
                 }
             }
 
             $( document ).ready(function() {
                alertStatement(window.location.href); 
+
+               $("#add_list").click(function () {
+                   var money1 = $("#money1").val();
+                   var money2 = $("#money2").val();
+                   if(money1 == money2) {
+                       var url = new URL(window.location.href);
+                       var id = url.searchParams.get("id");
+                       $.getJSON("../api/loan/" + id , function(data) {
+                           console.log(data.id)
+                       });
+                   } else {
+                       alert("กรุณากรอกเงินให้ตรงกัน")
+                   }
+               });
             });
 
 
