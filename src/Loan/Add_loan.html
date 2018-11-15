@@ -108,7 +108,7 @@
 				<div class="row">                    
 				<div class="col-sm-12">
                         <hr>
-                        <table>
+                        <table id = "old_data">
                             <tr>
                               <th><center>
                                     <label>
@@ -118,18 +118,6 @@
                               <th><center>ลำดับ</center></th>
                               <th><center>จำนวนเงิน</center></th>
                               <th><center>สร้างโดย</center></th>
-                            </tr>
-                            <tr>
-                              <td><center><label><input type="checkbox"><span class="text"></span></label></center></td>
-                              <td><center>1</center></td>
-                              <td><center>11,2222</center></td>
-                              <td><center>Munag</center></td>
-                            </tr>
-                            <tr>
-                                <td><center><label><input type="checkbox"><span class="text"></span></label></center></td>
-                                <td><center>2</center></td>
-                                <td><center>500</center></td>
-                                <td><center>Munag</center></td>
                             </tr>
                           </table>	
                           <hr>	
@@ -177,11 +165,18 @@
                 var url = new URL(link);
                 var id = url.searchParams.get("id");
                 if(id !== null){
-                    console.log(id);
-                    $.post("../api/loanlist/" + id) , 
-                    function (data) {
-                        console.log(data);
-                    }
+                    $.post("../api/loanlist/" + id , function(data) {
+                        console.log(data)
+                        var tmp = "";
+                        data.forEach(function(element , i ) {
+                            tmp += `<tr><td><center>`+ parseInt(i+1)+`</center></td>
+                                <td><center>`+ element.amount +`</center></td>
+                                <td><center>`+ element.DATE +`</center></td>
+                                <td><center>`+ element.loanleft+`</center></td>
+                                <td><center>`+ element.loan_id+`</center></td> </tr>`;
+                        })
+                        $("#old_data").append(tmp);
+                    });
                 } else {
                     console.log("not have id")
                 }
