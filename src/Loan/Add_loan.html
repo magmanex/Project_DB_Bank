@@ -173,20 +173,22 @@
         
         
         <script>
+            //Global variable
+            var old_amount = 0;
+
             $("#header").load("../header.html");
+
             function alertStatement(link) {
                 var url = new URL(link);
                 var id = url.searchParams.get("id");
                 if(id !== null){
                     $.post("../api/loanlist/" + id , function(data) {
-                        console.log(data)
                         var tmp = "";
                         data.forEach(function(element , i ) {
                             tmp += `<tr><td><center>`+ parseInt(i+1)+`</center></td>
                                 <td><center>`+ element.amount +`</center></td>
                                 <td><center>`+ element.DATE +`</center></td>
-                                <td><center>`+ element.loanleft+`</center></td>
-                                <td><center>`+ element.loan_id+`</center></td> </tr>`;
+                                <td><center>`+ element.loanleft+`</center></td>`;
                         })
                         $("#id").val(id);
                         $("#old_data").append(tmp);
@@ -197,18 +199,37 @@
                 }
             }
 
+            function load_old_amount() {
+                var url = new URL(window.location.href);
+                var id = url.searchParams.get("id");
+                $.getJSON("../api/loan/" + id , function(data) {
+                           old_amount = parseInt(data.amount);
+                });
+            }
+
             $( document ).ready(function() {
-               alertStatement(window.location.href); 
+               alertStatement(window.location.href);
+               load_old_amount();
 
                $("#add_list").click(function () {
                    var money1 = $("#money1").val();
                    var money2 = $("#money2").val();
+                   var currentdate = new Date(); 
+                   var datetime =   currentdate.getDate() + "/"
+                                    + (currentdate.getMonth()+1)  + "/" 
+                                    + currentdate.getFullYear() + " @ "  
+                                    + currentdate.getHours() + ":"  
+                                    + currentdate.getMinutes() + ":" 
+                                    + currentdate.getSeconds();
                    if(money1 == money2) {
-                       var url = new URL(window.location.href);
-                       var id = url.searchParams.get("id");
-                       $.getJSON("../api/loan/" + id , function(data) {
-                           console.log(data.id)
-                       });
+                       old_amount -= parseInt(money1);
+                       var tmp = "";
+                       tmp += `<tr><td><center>`+ 1+`</center></td>
+                                <td><center>`+ money1 +`</center></td>
+                                <td><center>`+ datetime +`</center></td>
+                                <td><center>`+ old_amount+`</center></td>`;
+                       $("#new_data").append(tmp);
+                       
                    } else {
                        alert("กรุณากรอกเงินให้ตรงกัน")
                    }
