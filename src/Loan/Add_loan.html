@@ -201,8 +201,6 @@
             }
 
             function load_old_amount() {
-                var url = new URL(window.location.href);
-                var id = url.searchParams.get("id");
                 $.getJSON("../api/loan/" + id , function(data) {
                            old_amount = parseInt(data.amount);
                 });
@@ -259,9 +257,21 @@
                                     loan_id:parseInt($("#id").val())
                                 });
                            });
+                           resolve();
+                       })
+                   }
+
+                   update_loan = function () {
+                       return new Promise(resolve => {
+                           $.post("../api/loanUpdate/" + id , {
+                               id: parseInt($("#id").val()),
+                               amount:old_amount
+                           })
+                           resolve();
                        })
                    }
                    await save_list();
+                   await update_loan();
                })
             });
 

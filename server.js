@@ -59,6 +59,7 @@ app.delete('/api/requestlist/:Id',requestlist.delete);
 app.get('/api/loan' , loan.findAll);
 app.post('/api/loan' , loan.create);
 app.get('/api/loan/:Id' , loan.findById);
+app.post('/api/loanUpdate/:Id' ,loan.update)
 
 app.get('/api/loanlist/:Id' , loanlist.findById)
 app.post('/api/loanlist/' , loanlist.create)
