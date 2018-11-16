@@ -150,7 +150,7 @@
                     </div>
                     <div align="right">
                             <hr>
-                                <a href="#" class="btn">บันทึก</a>
+                                <a href="#" id="save_btn" class="btn">บันทึก</a>
                                 <a href="../Loan/List_loan.html" class="btn">ย้อนกลับ</a>
                     </div>
                     
@@ -174,15 +174,16 @@
         
         <script>
             //Global variable
+            var id = 0;
             var old_amount = 0;
             var List = [];
             $("#header").load("../header.html");
 
             function alertStatement(link) {
                 var url = new URL(link);
-                var id = url.searchParams.get("id");
+                id = parseInt(url.searchParams.get("id"));
                 if(id !== null){
-                    $.post("../api/loanlist/" + id , function(data) {
+                    $.getJSON("../api/loanlist/" + id , function(data) {
                         var tmp = "";
                         data.forEach(function(element , i ) {
                             tmp += `<tr><td><center>`+ parseInt(i+1)+`</center></td>
@@ -211,20 +212,18 @@
                alertStatement(window.location.href);
                load_old_amount();
 
+               //Add List button 
                $("#add_list").click(function () {
                    var money1 = $("#money1").val();
                    var money2 = $("#money2").val();
                    var currentdate = new Date(); 
-                   var datetime =   currentdate.getDate() + "-"
+                   var datetime =   currentdate.getFullYear() + "-"
                                     + (currentdate.getMonth()+1)  + "-" 
-                                    + currentdate.getFullYear() ;
-                                    // + " @ "  
+                                    + currentdate.getDate();
+                                    // + "T"  
                                     // + currentdate.getHours() + ":"  
                                     // + currentdate.getMinutes() + ":" 
                                     // + currentdate.getSeconds();
-                   List.push({
-                       amount
-                   })
                    if(money1 == money2) {
                        old_amount -= parseInt(money1);
                        var tmp = "";
@@ -233,11 +232,37 @@
                                 <td><center>`+ datetime +`</center></td>
                                 <td><center>`+ old_amount+`</center></td>`;
                        $("#new_data").append(tmp);
-                       
+                       //Add data to list
+                       List.push({
+                            amount: parseInt(money1),
+                            DATE: datetime,
+                            loanleft: parseInt(old_amount),
+                            load_id:id
+                       });
+                       console.log(List)
                    } else {
                        alert("กรุณากรอกเงินให้ตรงกัน")
                    }
                });
+
+               //Save Button
+               $("#save_btn").click(async function () {
+
+                   save_list = function() {
+                       return new Promise(resolve =>{
+                           List.forEach(function ( element) {
+                                $.post("../api/loanlist/" ,{
+                                    id:null,
+                                    amount:element.amount,
+                                    DATE:element.DATE,
+                                    loanleft:element.loanleft,
+                                    loan_id:parseInt($("#id").val())
+                                });
+                           });
+                       })
+                   }
+                   await save_list();
+               })
             });
 
 

@@ -60,7 +60,8 @@ app.get('/api/loan' , loan.findAll);
 app.post('/api/loan' , loan.create);
 app.get('/api/loan/:Id' , loan.findById);
 
-app.post('/api/loanlist/:Id' , loanlist.findById)
+app.get('/api/loanlist/:Id' , loanlist.findById)
+app.post('/api/loanlist/' , loanlist.create)
 
 //Server
 const port = 8080
