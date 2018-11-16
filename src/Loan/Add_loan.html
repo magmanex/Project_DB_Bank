@@ -175,7 +175,7 @@
         <script>
             //Global variable
             var old_amount = 0;
-
+            var List = [];
             $("#header").load("../header.html");
 
             function alertStatement(link) {
@@ -215,12 +215,16 @@
                    var money1 = $("#money1").val();
                    var money2 = $("#money2").val();
                    var currentdate = new Date(); 
-                   var datetime =   currentdate.getDate() + "/"
-                                    + (currentdate.getMonth()+1)  + "/" 
-                                    + currentdate.getFullYear() + " @ "  
-                                    + currentdate.getHours() + ":"  
-                                    + currentdate.getMinutes() + ":" 
-                                    + currentdate.getSeconds();
+                   var datetime =   currentdate.getDate() + "-"
+                                    + (currentdate.getMonth()+1)  + "-" 
+                                    + currentdate.getFullYear() ;
+                                    // + " @ "  
+                                    // + currentdate.getHours() + ":"  
+                                    // + currentdate.getMinutes() + ":" 
+                                    // + currentdate.getSeconds();
+                   List.push({
+                       amount
+                   })
                    if(money1 == money2) {
                        old_amount -= parseInt(money1);
                        var tmp = "";

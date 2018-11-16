@@ -113,7 +113,11 @@
                 var items = "";
                  
                 $.each( data, function( key, val ) {
-                    items+= "<tr><td><center>"+val.id+"</center></td>"+"  "+"  <td><center>"+ val.status +"</center></td><td><center>"+ val.amount +"</center></td>"+""+"<td><center>"+ val.interestrate+"</center></td>"+""+"<td><center>"+ val.time+"</center></td> </tr>" ;
+                    items+= `<tr><td><a href="../Loan/Add_loan.html?id=`+val.id+`"><center>`+val.id+`</center></a></td>
+                        <td><center>`+ val.status +`</center></td>
+                        <td><center>`+ val.amount +`</center></td>
+                        <td><center>`+ val.interestrate+`</center></td>
+                        <td><center>`+ val.time+`</center></td> </tr>`;
                 });
                 
                 $( items ).appendTo( "#list" );
