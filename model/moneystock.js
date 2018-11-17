@@ -5,7 +5,7 @@ module.exports = (sequelize, type) => {
           primaryKey: true,
           autoIncrement: true
         },
-        amount: type.INTEGER,
+        amount: type.FLOAT,
         total : type.FLOAT
     },{
         tableName: 'moneyStock',

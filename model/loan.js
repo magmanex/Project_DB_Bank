@@ -6,9 +6,9 @@ module.exports = (sequelize, type) => {
           autoIncrement: true
         },
         status : type.STRING,
-        amount: type.INTEGER,
-        interestrate : type.INTEGER,
-        totalamount : type.INTEGER,
+        amount: type.FLOAT,
+        interestrate : type.FLOAT,
+        totalamount : type.FLOAT,
         time : type.DATE
     },{
         tableName: 'loan',

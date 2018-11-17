@@ -7,7 +7,9 @@ module.exports = (sequelize, type) => {
         },
         name: type.STRING,
         detail : type.STRING,
-        exp : type.DATE
+        exp : type.DATE,
+        rate : type.FLOAT,
+        duration : type.INTEGER
     },{
         tableName: 'promotion',
         createdAt: false,
