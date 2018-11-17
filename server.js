@@ -3,12 +3,13 @@ const bodyParser = require('body-parser')
 const path = require('path');
 const db = require('./api/index')
 
-
+//api
 const moneystock = require('./api/controllers/moneystock.controller');
 const promotion = require('./api/controllers/promotion.controller');
 const officer = require('./api/controllers/officer.controller');
 const requestlist = require('./api/controllers/requestlist.controller');
-
+const loan = require('./api/controllers/loan.controller');
+const loanlist = require('./api/controllers/loanlist.controller');
 
 const app = express()
 
@@ -55,6 +56,13 @@ app.get('/api/requestlist/:Id', requestlist.findById);
 app.put('/api/requestlist/:Id', requestlist.update);
 app.delete('/api/requestlist/:Id',requestlist.delete);
 
+app.get('/api/loan' , loan.findAll);
+app.post('/api/loan' , loan.create);
+app.get('/api/loan/:Id' , loan.findById);
+app.post('/api/loanUpdate/:Id' ,loan.update)
+
+app.get('/api/loanlist/:Id' , loanlist.findById)
+app.post('/api/loanlist/' , loanlist.create)
 
 //Server
 const port = 8080

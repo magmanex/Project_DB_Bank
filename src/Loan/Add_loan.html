@@ -80,7 +80,7 @@
                 <div class="form-group has-feedback">
                         <label class="col-lg-3 control-label">Document No.</label>
                         <div class="col-lg-3">
-                            <input type="text" class="form-control" id="company" value="" readonly>
+                            <input type="text" class="form-control" id="id" value="" readonly>
                         </div>
                         <label class="col-lg-3 control-label">วันที่</label>
                         <div class="col-lg-3">
@@ -92,23 +92,36 @@
                 <div class="form-group has-feedback">
                         <label class="col-lg-3 control-label">จำนวนเงิน</label>
                         <div class="col-lg-3">
-                            <input type="text" class="form-control" id="company" value="" >
+                            <input type="text" class="form-control" id="money1" value="" >
                         </div>
                         <label class="col-lg-3 control-label">ยืนยันจำนวนเงิน</label>
                         <div class="col-lg-3">
-                            <input type="text" class="form-control" id="date_po" value="" >
+                            <input type="text" class="form-control" id="money2" value="" >
                         </div>
                 </div>
                 <br>
                 <br>
                 <div align="right">
-                    <a href="#" class="btn">เพิ่มรายการ</a>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id="add_list">เพิ่มรายการ</button>
                     <a href="#" class="btn">ยกเลิกรายการ</a>
                 </div>
 				<div class="row">                    
 				<div class="col-sm-12">
+                    <hr>
+                        <table id = "new_data">
+                                <tr>
+                                  <th><center>
+                                        <label>
+                                            <input type="checkbox" id="checkAll"><span class="text"></span>
+                                        </label> All
+                                    </center></th>
+                                  <th><center>ลำดับ</center></th>
+                                  <th><center>จำนวนเงิน</center></th>
+                                  <th><center>สร้างโดย</center></th>
+                                </tr>
+                              </table>	
                         <hr>
-                        <table>
+                        <table id = "old_data">
                             <tr>
                               <th><center>
                                     <label>
@@ -118,18 +131,6 @@
                               <th><center>ลำดับ</center></th>
                               <th><center>จำนวนเงิน</center></th>
                               <th><center>สร้างโดย</center></th>
-                            </tr>
-                            <tr>
-                              <td><center><label><input type="checkbox"><span class="text"></span></label></center></td>
-                              <td><center>1</center></td>
-                              <td><center>11,2222</center></td>
-                              <td><center>Munag</center></td>
-                            </tr>
-                            <tr>
-                                <td><center><label><input type="checkbox"><span class="text"></span></label></center></td>
-                                <td><center>2</center></td>
-                                <td><center>500</center></td>
-                                <td><center>Munag</center></td>
                             </tr>
                           </table>	
                           <hr>	
@@ -149,7 +150,7 @@
                     </div>
                     <div align="right">
                             <hr>
-                                <a href="#" class="btn">บันทึก</a>
+                                <a href="#" id="save_btn" class="btn">บันทึก</a>
                                 <a href="../Loan/List_loan.html" class="btn">ย้อนกลับ</a>
                     </div>
                     
@@ -168,7 +169,112 @@
 		<!-- Scrolling Nav JavaScript -->
 		<script src="../js/jquery.easing.min.js"></script>
         <script src="../js/scrolling-nav.js"></script>		
+
+        
         
         <script>
+            //Global variable
+            var id = 0;
+            var old_amount = 0;
+            var List = [];
             $("#header").load("../header.html");
+
+            function alertStatement(link) {
+                var url = new URL(link);
+                id = parseInt(url.searchParams.get("id"));
+                if(id !== null){
+                    $.getJSON("../api/loanlist/" + id , function(data) {
+                        var tmp = "";
+                        data.forEach(function(element , i ) {
+                            tmp += `<tr><td><center>`+ parseInt(i+1)+`</center></td>
+                                <td><center>`+ element.amount +`</center></td>
+                                <td><center>`+ element.DATE +`</center></td>
+                                <td><center>`+ element.loanleft+`</center></td>`;
+                        })
+                        $("#id").val(id);
+                        $("#old_data").append(tmp);
+                    });
+                } else {
+                    $("#old_data").hide();
+                    console.log("not have id")
+                }
+            }
+
+            function load_old_amount() {
+                $.getJSON("../api/loan/" + id , function(data) {
+                           old_amount = parseInt(data.amount);
+                });
+            }
+
+            $( document ).ready(function() {
+               alertStatement(window.location.href);
+               load_old_amount();
+
+               //Add List button 
+               $("#add_list").click(function () {
+                   var money1 = $("#money1").val();
+                   var money2 = $("#money2").val();
+                   var currentdate = new Date(); 
+                   var datetime =   currentdate.getFullYear() + "-"
+                                    + (currentdate.getMonth()+1)  + "-" 
+                                    + currentdate.getDate();
+                                    // + "T"  
+                                    // + currentdate.getHours() + ":"  
+                                    // + currentdate.getMinutes() + ":" 
+                                    // + currentdate.getSeconds();
+                   if(money1 == money2) {
+                       old_amount -= parseInt(money1);
+                       var tmp = "";
+                       tmp += `<tr><td><center>`+ 1+`</center></td>
+                                <td><center>`+ money1 +`</center></td>
+                                <td><center>`+ datetime +`</center></td>
+                                <td><center>`+ old_amount+`</center></td>`;
+                       $("#new_data").append(tmp);
+                       //Add data to list
+                       List.push({
+                            amount: parseInt(money1),
+                            DATE: datetime,
+                            loanleft: parseInt(old_amount),
+                            load_id:id
+                       });
+                       console.log(List)
+                   } else {
+                       alert("กรุณากรอกเงินให้ตรงกัน")
+                   }
+               });
+
+               //Save Button
+               $("#save_btn").click(async function () {
+
+                   save_list = function() {
+                       return new Promise(resolve =>{
+                           List.forEach(function ( element) {
+                                $.post("../api/loanlist/" ,{
+                                    id:null,
+                                    amount:element.amount,
+                                    DATE:element.DATE,
+                                    loanleft:element.loanleft,
+                                    loan_id:parseInt($("#id").val())
+                                });
+                           });
+                           resolve();
+                       })
+                   }
+
+                   update_loan = function () {
+                       return new Promise(resolve => {
+                           $.post("../api/loanUpdate/" + id , {
+                               id: parseInt($("#id").val()),
+                               amount:old_amount
+                           })
+                           resolve();
+                       })
+                   }
+                   await save_list();
+                   await update_loan();
+                   location.reload();
+               })
+            });
+
+
         </script>

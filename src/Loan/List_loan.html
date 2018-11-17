@@ -82,24 +82,12 @@
 				<div class="row">                    
 				<div class="col-sm-12">
                         
-                        <table>
+                        <table id="list">
                             <tr>
                               <th><center>Document No.</center></th>
                               <th><center>Date</center></th>
                               <th><center>Create by</center></th>
                               <th><center>Status</center></th>
-                            </tr>
-                            <tr>
-                              <td><center>11223</center></td>
-                              <td><center>11/2/2018</center></td>
-                              <td><center>Ooh</center></td>
-                              <td><center>รอการกู้</center></td>
-                            </tr>
-                            <tr>
-                                <td><center>11224</center></td>
-                                <td><center>11/2/2018</center></td>
-                                <td><center>Munag</center></td>
-                                <td><center>อนุมัติการกู้</center></td>
                             </tr>
                           </table>					
 					</div>
@@ -121,4 +109,19 @@
         
         <script>
             $("#header").load("../header.html");
+            $.getJSON( "../api/loan", function( data ) {
+                var items = "";
+                 
+                $.each( data, function( key, val ) {
+                    items+= `<tr><td><a href="../Loan/Add_loan.html?id=`+val.id+`"><center>`+val.id+`</center></a></td>
+                        <td><center>`+ val.status +`</center></td>
+                        <td><center>`+ val.amount +`</center></td>
+                        <td><center>`+ val.interestrate+`</center></td>
+                        <td><center>`+ val.time+`</center></td> </tr>`;
+                });
+                
+                $( items ).appendTo( "#list" );
+           
+  
+                });
         </script>
