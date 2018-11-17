@@ -58,6 +58,13 @@ const promotion= promotionModel(sequelize, Sequelize)
 const customerslist= customerslistModel(sequelize, Sequelize)
 
 //ORM
+
+
+//customerslist
+customerslist.belongsTo(customers,{foreignKey: 'customers_id', targetKey: 'id'})
+customerslist.belongsTo(loan,{foreignKey: 'loan_id', targetKey: 'id'})
+
+
 //moneyStock
 moneyStock.belongsTo(typeStock,{as : 'type', foreignKey: 'typeStock_id'})
 
@@ -73,14 +80,18 @@ requestlist.belongsTo(customers,{foreignKey: 'customers_id' ,  targetKey: 'id'  
 login.belongsTo(customers,{ foreignKey: 'customers_id' , targetKey: 'id' })
 login.belongsTo(officer,{ foreignKey: 'officer_id' ,  targetKey: 'id' })
 
+
 //calendar crm
 calendar_crm.belongsTo(officer,{foreignKey:'officer_id' , targetKey: 'id'})
 calendar_crm.belongsTo(requestlist,{ foreignKey: 'requestlist_id' , targetKey: 'id'})
+
 
 //loan
 loan.belongsTo(officer,{foreignKey:'officer_id' , targetKey: 'id'})
 loan.belongsTo(officer,{foreignKey:'debt_id' , targetKey: 'id'})
 //loan.belongsTo(customers,{foreignKey:'customers_id' , targetKey: 'id'}) //เอาออก
+
+
 
 //loanlist
 loanlist.belongsTo(loan,{foreignKey:'loan_id' , targetKey:'id'})
@@ -96,19 +107,20 @@ calendar_debt.belongsTo(loan,{foreignKey: 'loan_id' , targetKey: 'id'})
 
 
 
+
 //moneyStock.findAll({include: [ { model: typeStock, as: 'type' } ]}).then(function(res) {
 async function create(){
-  await officerData.createOfficer(officer)
-  await promotionData.createPromotion(promotion)
-  await typeStockData.createTypeStock(typeStock)
-  await customerData.createCustomer(customers)
-  await moneyStockData.createMoneyStock(moneyStock)
-  await loanData.createLoan(loan)
-  await loginData.createLogin(login)
-  await requestListData.createRequestList(requestlist)
-  await calendarDeptData.createCalendarDept(calendar_debt)
-  await loanListData.createLoanList(loanlist)
-  await calendarCRMData.createCalendarCRM(calendar_crm)
+  let a1 =await officerData.createOfficer(officer)
+  let a2 =await promotionData.createPromotion(promotion)
+  let a3 =await typeStockData.createTypeStock(typeStock)
+  let a4 =await customerData.createCustomer(customers)
+  let a5 =await moneyStockData.createMoneyStock(moneyStock)
+  let a6 =await loanData.createLoan(loan)
+  let a7 =await loginData.createLogin(login)
+  let a8 =await requestListData.createRequestList(requestlist)
+  let a9 =await calendarDeptData.createCalendarDept(calendar_debt)
+  let a10 =await loanListData.createLoanList(loanlist)
+  let a11 =await calendarCRMData.createCalendarCRM(calendar_crm)
   }
 function syncDatabase() {
   sequelize.sync({ force: true })
