@@ -63,6 +63,10 @@ moneyStock.belongsTo(typeStock,{as : 'type', foreignKey: 'typeStock_id'})
 //requestlist
 requestlist.belongsTo(promotion,{foreignKey: 'promotion_id' , targetKey: 'id'  })
 requestlist.belongsTo(customers,{foreignKey: 'customers_id' ,  targetKey: 'id'  })
+//requestlist.belongsTo(promotion,{foreignKey: 'promotion_rate' , targetKey: 'rate'  })
+//requestlist.belongsTo(promotion,{foreignKey: 'promotion_duration' , targetKey: 'duration'  })
+
+
 
 //login
 login.belongsTo(customers,{ foreignKey: 'customers_id' , targetKey: 'id' })
@@ -87,6 +91,9 @@ moneyStock.belongsTo(loanlist,{foreignKey:'loanlist_id_fromloan' , targetKey: 'l
 //calendar dept
 calendar_debt.belongsTo(officer,{foreignKey: 'officer_id' , targetKey: 'id'})
 calendar_debt.belongsTo(loan,{foreignKey: 'loan_id' , targetKey: 'id'})
+
+
+
 
 //moneyStock.findAll({include: [ { model: typeStock, as: 'type' } ]}).then(function(res) {
 async function create(){
