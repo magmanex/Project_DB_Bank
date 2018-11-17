@@ -8,10 +8,8 @@ module.exports = (sequelize, type) => {
         status : type.STRING,
         amount: type.INTEGER,
         interestrate : type.INTEGER,
-        payback : type.INTEGER,
+        totalamount : type.INTEGER,
         time : type.DATE
-       
-
     },{
         tableName: 'loan',
         createdAt: false,

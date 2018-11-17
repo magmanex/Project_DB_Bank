@@ -1,13 +1,15 @@
 module.exports = (sequelize, type) => {
     return sequelize.define('requestlist', {
-        asset: {
-          type: type.STRING,
+        id: {
+          type: type.INTEGER,
           primaryKey: true,
-          
+          autoIncrement: true
+
         },
+        asset: type.STRING,
         amount: type.INTEGER,
-        campaign : type.STRING,
-        customer_id : type.INTEGER
+        date: type.DATE
+       
     },{
         tableName: 'requestlist',
         createdAt: false,
