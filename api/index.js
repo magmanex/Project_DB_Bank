@@ -11,6 +11,7 @@ const requestlistModel = require('../model/requestlist')
 const calendar_crmModel = require('../model/calendar_crm')
 const calendar_debtModel = require('../model/calendar_debt')
 const promotionModel = require('../model/promotion')
+const customerslistModel = require('../model/customerslist')
 
 //import data
 const typeStockData = require('../model/data/createTypeStock')
@@ -54,7 +55,7 @@ const requestlist= requestlistModel(sequelize, Sequelize)
 const calendar_crm= calendar_crmModel(sequelize, Sequelize)
 const calendar_debt= calendar_debtModel(sequelize, Sequelize)
 const promotion= promotionModel(sequelize, Sequelize)
-
+const customerslist= customerslistModel(sequelize, Sequelize)
 
 //ORM
 //moneyStock
@@ -79,7 +80,7 @@ calendar_crm.belongsTo(requestlist,{ foreignKey: 'requestlist_id' , targetKey: '
 //loan
 loan.belongsTo(officer,{foreignKey:'officer_id' , targetKey: 'id'})
 loan.belongsTo(officer,{foreignKey:'debt_id' , targetKey: 'id'})
-loan.belongsTo(customers,{foreignKey:'customers_id' , targetKey: 'id'})
+//loan.belongsTo(customers,{foreignKey:'customers_id' , targetKey: 'id'}) //เอาออก
 
 //loanlist
 loanlist.belongsTo(loan,{foreignKey:'loan_id' , targetKey:'id'})
@@ -134,5 +135,6 @@ module.exports = {
     calendar_crm,
     calendar_debt,
     promotion,
+    customerslist
     
 }
