@@ -14,5 +14,13 @@ module.exports = (sequelize, type) => {
         tableName: 'promotion',
         createdAt: false,
         updatedAt: false
-      })
+      },
+      {
+        indexes: [
+            {
+                unique: true,
+                fields: ['id']
+            }
+        ]
+    })
 }

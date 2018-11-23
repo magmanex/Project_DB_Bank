@@ -10,5 +10,13 @@ module.exports = (sequelize, type) => {
         tableName: 'typeStock',
         createdAt: false,
         updatedAt: false
-      })
+      },
+      {
+        indexes: [
+            {
+                unique: true,
+                fields: ['id']
+            }
+        ]
+    })
 }
