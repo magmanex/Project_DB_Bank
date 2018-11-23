@@ -11,5 +11,13 @@ module.exports = (sequelize, type) => {
         tableName: 'login',
         createdAt: false,
         updatedAt: false
-      })
+      },
+      {
+        indexes: [
+            {
+                unique: true,
+                fields: ['username','password']
+            }
+        ]
+    })
 }
