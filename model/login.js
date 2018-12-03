@@ -5,12 +5,19 @@ module.exports = (sequelize, type) => {
           primaryKey: true
         },
         password: type.STRING,
-        customer_id : type.INTEGER,
-        officer_id : type.INTEGER
+        type: type.STRING
 
     },{
         tableName: 'login',
         createdAt: false,
         updatedAt: false
-      })
+      },
+      {
+        indexes: [
+            {
+                unique: true,
+                fields: ['username','password']
+            }
+        ]
+    })
 }
