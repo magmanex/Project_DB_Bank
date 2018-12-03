@@ -5,13 +5,21 @@ module.exports = (sequelize, type) => {
           primaryKey: true,
           autoIncrement: true
         },
-        amount: type.INTEGER,
+        amount: type.FLOAT,
         DATE : type.DATE,
-        loanleft : type.INTEGER
+        loanleft : type.FLOAT
 
     },{
         tableName: 'loanlist',
         createdAt: false,
         updatedAt: false
-      })
+      },
+      {
+        indexes: [
+            {
+                unique: true,
+                fields: ['id']
+            }
+        ]
+    })
 }

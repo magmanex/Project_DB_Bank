@@ -7,8 +7,9 @@ module.exports = (sequelize, type) => {
 
         },
         asset: type.STRING,
-        amount: type.INTEGER,
-        date: type.DATE
+        amount: type.FLOAT,
+        date: type.DATE,
+        listapprove : type.BOOLEAN
        
     },{
         tableName: 'requestlist',

@@ -63,6 +63,10 @@ moneyStock.belongsTo(typeStock,{as : 'type', foreignKey: 'typeStock_id'})
 //requestlist
 requestlist.belongsTo(promotion,{foreignKey: 'promotion_id' , targetKey: 'id'  })
 requestlist.belongsTo(customers,{foreignKey: 'customers_id' ,  targetKey: 'id'  })
+//requestlist.belongsTo(promotion,{foreignKey: 'promotion_rate' , targetKey: 'rate'  })
+//requestlist.belongsTo(promotion,{foreignKey: 'promotion_duration' , targetKey: 'duration'  })
+
+
 
 //login
 login.belongsTo(customers,{ foreignKey: 'customers_id' , targetKey: 'id' })
@@ -72,13 +76,10 @@ login.belongsTo(officer,{ foreignKey: 'officer_id' ,  targetKey: 'id' })
 calendar_crm.belongsTo(officer,{foreignKey:'officer_id' , targetKey: 'id'})
 calendar_crm.belongsTo(requestlist,{ foreignKey: 'requestlist_id' , targetKey: 'id'})
 
-//calendar dept
-calendar_debt.belongsTo(officer,{foreignKey: 'officer_id' , targetKey: 'id'})
-calendar_debt.belongsTo(loan,{foreignKey: 'loan_id' , targetKey: 'id'})
-
 //loan
 loan.belongsTo(officer,{foreignKey:'officer_id' , targetKey: 'id'})
 loan.belongsTo(officer,{foreignKey:'debt_id' , targetKey: 'id'})
+loan.belongsTo(customers,{foreignKey:'customers_id' , targetKey: 'id'})
 
 //loanlist
 loanlist.belongsTo(loan,{foreignKey:'loan_id' , targetKey:'id'})
@@ -86,6 +87,12 @@ loanlist.belongsTo(loan,{foreignKey:'loan_id' , targetKey:'id'})
 //moneystock
 moneyStock.belongsTo(loanlist,{foreignKey:'loanlist_id' , targetKey: 'id'})
 moneyStock.belongsTo(loanlist,{foreignKey:'loanlist_id_fromloan' , targetKey: 'loan_id'})
+
+//calendar dept
+calendar_debt.belongsTo(officer,{foreignKey: 'officer_id' , targetKey: 'id'})
+calendar_debt.belongsTo(loan,{foreignKey: 'loan_id' , targetKey: 'id'})
+
+
 
 
 //moneyStock.findAll({include: [ { model: typeStock, as: 'type' } ]}).then(function(res) {
