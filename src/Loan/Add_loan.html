@@ -255,8 +255,9 @@
                                     DATE:element.DATE,
                                     loanleft:element.loanleft,
                                     loan_id:parseInt($("#id").val())
+                                },function(data){
+                                    create_moneyStock(data.id,element.amount,data.loan_id);
                                 });
-                                create_moneyStock(element.amount);
                            });
                            resolve();
                        })
@@ -272,11 +273,14 @@
                        })
                    }
 
-                   create_moneyStock = function (_amount) {
+                   create_moneyStock = function (_id,_amount,_idLoan) {
                        return new Promise(resolve => {
                            $.post("../api/moneystockGetLast" , {
                                id:null,
-                               amount:_amount
+                               amount:_amount,
+                               typeStock_id:1,
+                               loanlist_id:_id,
+                               loanlist_id_fromloan:_idLoan
                            })
                            resolve();
                        })
