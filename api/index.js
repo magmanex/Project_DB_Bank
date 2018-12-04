@@ -61,9 +61,6 @@ const customersList= customersListModel(sequelize, Sequelize)
 //moneyStock
 moneyStock.belongsTo(typeStock,{as : 'type', foreignKey: 'typeStock_id'})
 
-moneyStock.belongsTo(loanlist,{foreignKey:'loanlist_id' , targetKey: 'id'})
-moneyStock.belongsTo(loanlist,{foreignKey:'loanlist_id_fromloan' , targetKey: 'loan_id'})
-
 //requestlist
 requestlist.belongsTo(promotion,{foreignKey: 'promotion_id' , targetKey: 'id'  })
 requestlist.belongsTo(customers,{foreignKey: 'customers_id' ,  targetKey: 'id'  })
@@ -84,6 +81,9 @@ loan.belongsTo(officer,{foreignKey:'debt_id' , targetKey: 'id'})
 
 //loanlist
 loanlist.belongsTo(loan,{foreignKey:'loan_id' , targetKey:'id'})
+
+moneyStock.belongsTo(loanlist,{foreignKey:'loanlist_id' , targetKey: 'id'})
+moneyStock.belongsTo(loanlist,{foreignKey:'loanlist_id_fromloan' , targetKey: 'loan_id'})
 
 //calendar dept
 calendar_debt.belongsTo(officer,{foreignKey: 'officer_id' , targetKey: 'id'})

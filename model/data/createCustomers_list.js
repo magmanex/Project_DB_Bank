@@ -1,5 +1,5 @@
 module.exports = {
-    createCalendarDept : createCalendarDept
+    createCustomersList : createCustomersList
 }
 
 function createCustomersList(obj) {
