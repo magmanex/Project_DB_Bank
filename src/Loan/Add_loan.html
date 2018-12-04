@@ -250,6 +250,10 @@
                                     // + currentdate.getMinutes() + ":" 
                                     // + currentdate.getSeconds();
                    if(money1 == money2) {
+                       if(parseFloat(money1) > old_amount) {
+                           alert("กรอกเงินเกินจำนวน กรุณาตรวจสอบใหม่");
+                           return;
+                       }
                        old_amount -= parseFloat(money1);
                        //Add data to list
                        List.push({
