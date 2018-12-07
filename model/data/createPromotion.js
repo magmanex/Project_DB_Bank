@@ -16,11 +16,17 @@ function createPromotion(obj) {
 var promotion = [
                 {
                     id:1,
-                    name:"ลดแค่นี้ หนี้บาน",
-                    detail:"ลองเฉยๆ"
+                    name:"สุขต่อไม่รอแล้วนะ",
+                    detail:"PTT Blue Card"
                 },                    
                 {
                     id:2,
-                    name:"หนี้น้อย นั่งร้อยมาลัย",
-                    detail:"ลองรอบ2"}
+                    name:"E-Account Opening",
+                    detail:"ไม่ง้อเอกสาร"
+                },
+                {
+                    id:3,
+                    name:"SMS ขยันบอก",
+                    detail:"เงินเข้าก็บอก เงินออกก็รู้"
+                }
                 ]
