@@ -70,43 +70,11 @@
         
         <div class="section">
 	    	<div class="container">
-				<div class="row">
-			
-			<ul class="grid cs-style-2">
-	        	<div class="col-md-4 col-sm-6">
-					<figure>
-						<img src="img/portfolio/4.jpg" alt="img04">
-						<figcaption>
-							<h3>สุขต่อไม่รอแล้วนะ</h3>
-							<span>กับบัตร PTT Blue Credit Card</span>
-							<a href="portfolio-item.html">More</a>
-						</figcaption>
-					</figure>
-	        	</div>	
-				<div class="col-md-4 col-sm-6">
-					<figure>
-						<img src="img/portfolio/1.jpg" alt="img01">
-						<figcaption>
-							<h3>E-Account Opening</h3>
-							<span>เปิดบัญชีหุ้นทันใจ ไม่ง้อเอกสาร</span>
-							<a href="portfolio-item1.html">More</a>
-						</figcaption>
-					</figure>
-				</div>
-				<div class="col-md-4 col-sm-6">
-					<figure>
-						<img src="img/portfolio/2.jpg" alt="img05">
-						<figcaption>
-							<h3>SMS ขยันบอก</h3>
-							<span>เงินเข้าก็บอก เงินออกก็รู้</span>
-							<a href="portfolio-item2.html">More</a>
-						</figcaption>
-					</figure>
-				</div>
-				
-			</ul>
-
-				
+				<div class="row">	
+					<ul class="grid cs-style-2">				
+						<table id="promolist">
+						</table>
+					</ul>
 				</div>
 				
 				<ul class="pager">
@@ -181,4 +149,15 @@
 
 <script>
 	$("#header").load("header.html");
+	$.getJSON( "../api/promotion", function( data ){
+	var items = "";
+                 
+                $.each( data, function( key, val ) {
+                    items+= "<div class=col-md-4 col-sm-6><figure><img src=img/portfolio/"+val.id+".jpg alt=img0"+val.id+"><figcaption><h3>"+val.name+"</h3>"+"<span>"+val.detail+"</span>"+"<a href=portfolio-item"+val.id+".html>More</a>"+"</figcaption></figure></div>" ;
+                });
+                
+                $( items ).appendTo( "#promolist" );
+           
+  
+                });
 </script>
