@@ -31,6 +31,9 @@ app.post('/api/moneystock', moneystock.create);
 app.get('/api/moneystock/:Id', moneystock.findById);
 app.put('/api/moneystock/:Id', moneystock.update);
 
+//test moneystock
+app.post('/api/moneystockGetLast' , moneystock.getLast)
+
 app.get('/api/promotion', promotion.findAll);
 app.post('/api/promotion', promotion.create);
 app.get('/api/promotion/:Id', promotion.findById);

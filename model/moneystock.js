@@ -9,7 +9,7 @@ module.exports = (sequelize, type) => {
         total : type.FLOAT
     },{
         tableName: 'moneyStock',
-        createdAt: false,
+        createdAt: true,
         updatedAt: false
       })
 }
