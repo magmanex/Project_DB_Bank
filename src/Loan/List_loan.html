@@ -85,8 +85,10 @@
                             <tr>
                               <th><center>Document No.</center></th>
                               <th><center>Date</center></th>
-                              <th><center>Create by</center></th>
-                              <th><center>Status</center></th>
+                              <th><center>จำนวนต่อเดือน</center></th>
+                              <th><center>ดอกเบี้ย</center></th>
+                              <th><center>จำนวนการกู้ยืม</center></th>
+                              <th><center>สถานะ</center></th>
                             </tr>
                           </table>					
 					</div>
@@ -113,10 +115,12 @@
                  
                 $.each( data, function( key, val ) {
                     items+= `<tr><td><a href="../Loan/Add_loan.html?id=`+val.id+`"><center>`+val.id+`</center></a></td>
-                        <td><center>`+ val.status +`</center></td>
+                        <td><center>`+ val.time+`</center></td> 
                         <td><center>`+ val.amount +`</center></td>
                         <td><center>`+ val.interestrate+`</center></td>
-                        <td><center>`+ val.time+`</center></td> </tr>`;
+                        <td><center>`+ val.totalamount +`</center></td>
+                        <td><center>`+ val.status +`</center></td>
+                        </tr>`;
                 });
                 
                 $( items ).appendTo( "#list" );
