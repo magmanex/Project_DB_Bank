@@ -53,12 +53,6 @@ app.get('/api/requestlist/:Id', requestlist.findById);
 app.put('/api/requestlist/:Id', requestlist.update);
 app.delete('/api/requestlist/:Id',requestlist.delete);
 
-app.get('/api/requestlist', requestlist.findAll);
-app.post('/api/requestlist', requestlist.create);
-app.get('/api/requestlist/:Id', requestlist.findById);
-app.put('/api/requestlist/:Id', requestlist.update);
-app.delete('/api/requestlist/:Id',requestlist.delete);
-
 app.get('/api/loan' , loan.findAll);
 app.post('/api/loan' , loan.create);
 app.get('/api/loan/:Id' , loan.findById);
