@@ -61,8 +61,8 @@ const customersList= customersListModel(sequelize, Sequelize)
 
 
 //customerslist
-customerslist.belongsTo(customers,{foreignKey: 'customers_id', targetKey: 'id'})
-customerslist.belongsTo(loan,{foreignKey: 'loan_id', targetKey: 'id'})
+customersList.belongsTo(customers,{foreignKey: 'customers_id', targetKey: 'id'})
+customersList.belongsTo(loan,{foreignKey: 'loan_id', targetKey: 'id'})
 
 
 //moneyStock
