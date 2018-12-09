@@ -82,7 +82,7 @@
 				<div class="row">                    
 				<div class="col-sm-12">
                         
-                        <table id="list">
+                        <table>
                             <tr>
                               <th><center>Request ID</center></th>
                               <th><center>Customer Name</center></th>
@@ -91,6 +91,9 @@
 							  <th><center>โปรโมชั่น</center></th>
 							  <th><center>สถานะ</center></th>
                             </tr>
+                            <tbody id="list">
+
+                            </tbody>
                           </table>					
 					</div>
 				</div>
@@ -151,25 +154,30 @@
 
 <script>
     $("#header").load("../header.html");
-    $( document ).ready(function() {
-        $.getJSON( "../api/requestlist", function( data ) {
-            console.log("test")
+    async function Onstart() {
+        var items = "";
+        await $.getJSON( "../api/requestlist", function( data ) {
+            $.each( data, async function( key, val ) {
+                await $.getJSON("../api/customer/" + val.customers_id , function(data2) {
+                items = `<tr><td><a href="../Loan/Add_loan.html?id=`+val.id+`"><center>`+val.id+`</center></a></td>
+                <td><center>`+ data2.firstname+`</center></td> 
+                <td><center>`+ val.asset +`</center></td>
+                <td><center>`+ val.date+`</center></td>
+                <td><center>`+ val.promotion_id +`</center></td>
+                <td><center>`+ val.status +`</center></td>
+                </tr>`;
+                console.log(items)
+                $( items ).appendTo( "#list" );
 
-                var items = "";
-                $.each( data, function( key, val ) {
-                    items+= `<tr><td><a href="../Loan/Add_loan.html?id=`+val.id+`"><center>`+val.id+`</center></a></td>
-                        <td><center>`+ val.customers.firstName+`</center></td> 
-                        <td><center>`+ val.asset +`</center></td>
-                        <td><center>`+ val.date+`</center></td>
-                        <td><center>`+ val.promotion.name +`</center></td>
-                        <td><center>`+ val.status +`</center></td>
-                        </tr>`;
                 });
                 
-                $( items ).appendTo( "#list" );
-           
-  
-                });
-                });
+            });
+
+        });
+
+    }
+    $( document ).ready(function() {
+        Onstart();
+    });
     
 </script>

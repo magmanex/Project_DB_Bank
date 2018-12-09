@@ -4,6 +4,7 @@ const path = require('path');
 const db = require('./api/index')
 
 //api
+const customer = require('./api/controllers/customers.controller')
 const moneystock = require('./api/controllers/moneystock.controller');
 const promotion = require('./api/controllers/promotion.controller');
 const officer = require('./api/controllers/officer.controller');
@@ -24,6 +25,8 @@ app.use('/home',function(req,res){
 });
 
 ///Rest API
+app.get('/api/customer' , customer.findAll);
+app.get('/api/customer/:Id' , customer.findById);
 
 //Find All
 app.get('/api/moneystock', moneystock.findAll);
