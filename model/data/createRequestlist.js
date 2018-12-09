@@ -10,6 +10,7 @@ function createRequestList(obj) {
                 asset:item.asset,
                 amount:item.amount,
                 date:item.date,
+                listapprove:item.listapprove,
                 promotion_id:item.promotion_id,
                 customers_id:item.customers_id
             })
@@ -21,6 +22,7 @@ var requestList = [{
                     asset:"สมพงษ์",
                     amount:1000,
                     date:"2017-06-15",
+                    listapprove:"S",
                     promotion_id:1,
                     customers_id:1},
                 {
@@ -28,6 +30,7 @@ var requestList = [{
                     asset:"แสนมี",
                     amount:2000,
                     date:"2017-06-15",
+                    listapprove:"W",
                     promotion_id:2,
                     customers_id:2}
                 ]

@@ -159,7 +159,7 @@
         await $.getJSON( "../api/requestlist", function( data ) {
             $.each( data, async function( key, val ) {
                 await $.getJSON("../api/customer/" + val.customers_id , function(data2) {
-                items = `<tr><td><a href="../Loan/Add_loan.html?id=`+val.id+`"><center>`+val.id+`</center></a></td>
+                items = `<tr><td><a href="../RequestList/Add_request.html?id=`+val.id+`"><center>`+val.id+`</center></a></td>
                 <td><center>`+ data2.firstname+`</center></td> 
                 <td><center>`+ val.asset +`</center></td>
                 <td><center>`+ val.date+`</center></td>
