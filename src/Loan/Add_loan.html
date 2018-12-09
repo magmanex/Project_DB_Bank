@@ -256,6 +256,7 @@
                                     loanleft:element.loanleft,
                                     loan_id:parseInt($("#id").val())
                                 });
+                                create_moneyStock(element.amount);
                            });
                            resolve();
                        })
@@ -266,6 +267,16 @@
                            $.post("../api/loanUpdate/" + id , {
                                id: parseInt($("#id").val()),
                                amount:old_amount
+                           })
+                           resolve();
+                       })
+                   }
+
+                   create_moneyStock = function (_amount) {
+                       return new Promise(resolve => {
+                           $.post("../api/moneystockGetLast" , {
+                               id:null,
+                               amount:_amount
                            })
                            resolve();
                        })

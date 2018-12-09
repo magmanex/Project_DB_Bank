@@ -13,5 +13,13 @@ module.exports = (sequelize, type) => {
         tableName: 'loanlist',
         createdAt: false,
         updatedAt: false
-      })
+      },
+      {
+        indexes: [
+            {
+                unique: true,
+                fields: ['id']
+            }
+        ]
+    })
 }

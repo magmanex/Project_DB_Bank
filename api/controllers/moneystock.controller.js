@@ -55,3 +55,20 @@ exports.update = (req, res) => {
 			)
 		.catch((error) => res.status(400).send(error));			 
 };
+
+exports.getLast = (req ,res) => {
+    db.moneyStock.findAll({
+        limit: 1,
+        order: [ [ 'id', 'DESC' ]]
+      }).then(function(entries){
+        //only difference is that you get users list limited to 1
+        //entries[0]
+        var result = parseFloat(entries[0].total) + parseFloat(req.body.amount);
+        db.moneyStock.create({
+            amount:req.body.amount,
+            total:result
+        }).then(data => {
+            res.json(data);
+        })
+      }); 
+}
