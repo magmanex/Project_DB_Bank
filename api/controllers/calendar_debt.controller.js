@@ -1,26 +1,29 @@
 const db = require('../index')
-/*
+
 exports.findAll = (req, res) => {
     var List =[];
     db.loan.findAll()
     .then(stock => {
-        var MonthDiff = currentdate - stock.time;
-	if( MonthDiff.getMonth() > 0  ){
-    db.customerslist.findAll({where: {loan_id : stock.id}})
+        var currentdate = new Date();
+        var MonthDiff = currentdate - stock[0].time;
+        var value = new Date(MonthDiff);
+	if( value.getMonth() > 0 ){
+    db.customersList.findAll({where: {loan_id : stock[0].id}})
         .then(customer =>
         {
-            db.customers.findById(customer.id).then(tmp =>
+            db.customers.findById(customer[0].id).then(tmp =>
                 {
-                    List.push(tmp.firstName)
+                    List.push(tmp.firstname)
+                    res.json(List);
                 })
         }       
          )
   
 	}
-}
+} 
 )
 }
-*/
+
 
 //Create
 exports.create = (req, res) => {

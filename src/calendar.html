@@ -83,7 +83,7 @@
 				<div class="row">                    
 				<div class="col-sm-12">
                         
-                        <table>
+                        <table id="list">
                             <tr>
                                 <th><center>
                                     <label>
@@ -96,20 +96,7 @@
                                 <th><center>Time</center></th>
                                 <th><center>ชื่อลูกค้า</center></th>
                             </tr>
-                            <tr>
-                                <td><center><label><input type="checkbox"><span class="text"></span></label></center></td>
-                              <td><center>11223</center></td>
-                              <td><center>11/2/2018</center></td>
-                              <td><center>12.00</center></td>
-                              <td><center>สมหมี</center></td>
-                            </tr>
-                            <tr>
-                                <td><center><label><input type="checkbox"><span class="text"></span></label></center></td> 
-                                <td><center>11224</center></td>
-                                <td><center>11/2/2018</center></td>
-                                <td><center>13.00</center></td>
-                                <td><center>ราม</center></td>
-                            </tr>
+                           
                           </table>					
 					</div>
 				</div>
@@ -130,4 +117,20 @@
         
         <script>
             $("#header").load("../header.html");
+            $.getJSON( "../api/calendar_debt", function( data ) {
+                var items = "";
+                 
+                $.each( data, function( key, val ) {
+                    items+= `<tr><td><a href="../Loan/Add_loan.html?id=`+val.id+`"><center>`+val.id+`</center></a></td>
+                        <td><center>`+ val.time+`</center></td> 
+                        <td><center>`+ val.time +`</center></td>
+                        <td><center>`+ val.firstName+`</center></td>
+                    
+                        </tr>`;
+                });
+                
+                $( items ).appendTo( "#list" );
+           
+  
+                });
         </script>

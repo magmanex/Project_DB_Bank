@@ -1,7 +1,7 @@
 const db = require('../index')
 
 exports.findAll = (req, res) => {
-    db.customersList.findAll({include: [ { model: db.typeStock, as: 'type' }] } ).then(stock => res.json(stock))
+    db.customersList.findAll().then(stock => res.json(stock))
 }
 
 
