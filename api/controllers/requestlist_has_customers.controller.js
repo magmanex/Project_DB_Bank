@@ -23,7 +23,7 @@ exports.create = (req, res) => {
 exports.findById = (req, res) => {
 
     db.requestlist_has_customers.findAll({
-        where:{customers_id:req.params.Id}
+        where:{requestlist_id:req.params.Id}
     })
     .then(stock => {
             if (!stock){

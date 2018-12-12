@@ -29,6 +29,7 @@ const calendarCRMData = require('../model/data/createCalendar_crm')
 const calendarDeptData = require('../model/data/createCalendar_dept')
 const promotionData = require('../model/data/createPromotion')
 const customersListData = require('../model/data/createCustomers_list')
+const customerRequestData = require('../model/data/createCustomers_request_list')
 
 
 
@@ -128,6 +129,7 @@ async function create(){
   await loanListData.createLoanList(loanlist)
   await calendarCRMData.createCalendarCRM(calendar_crm)
   await customersListData.createCustomersList(customersList)
+  await customerRequestData.createCustomersRequestList(requestlist_has_customers)
   }
 function syncDatabase() {
   sequelize.sync({ force: true })

@@ -158,23 +158,23 @@
         var items = "";
         await $.getJSON( "../../api/requestlist", function( data ) {
             $.each( data, async function( key, val ) {
-                await $.getJSON("../../api/customer/" + val.customers_id , function(data2) {
-                items = `<tr><td><a href="../RequestList/Add_request.html?id=`+val.id+`"><center>`+val.id+`</center></a></td>
-                <td><center>`+ data2.firstname+`</center></td> 
-                <td><center>`+ val.asset +`</center></td>
-                <td><center>`+ val.date+`</center></td>
-                <td><center>`+ val.promotion_id +`</center></td>
-                <td><center>`+ val.status +`</center></td>
-                </tr>`;
-                console.log(items)
-                $( items ).appendTo( "#list" );
-
+                $.getJSON("../../api/requestlist_has_customers/" + val.id , function (element) {
+                    element.forEach(elements => {
+                    $.getJSON("../../api/customer/" + elements.customers_id , function(data2) {
+                        items = `<tr><td><a href="../RequestList/Add_request.html?id=`+val.id+`"><center>`+val.id+`</center></a></td>
+                        <td><center>`+ data2.firstname+`</center></td> 
+                        <td><center>`+ val.asset +`</center></td>
+                        <td><center>`+ val.date+`</center></td>
+                        <td><center>`+ val.promotion_id +`</center></td>
+                        <td><center>`+ val.status +`</center></td>
+                        </tr>`;
+                        console.log(items)
+                        $( items ).appendTo( "#list" );
+                        });
+                    });
                 });
-                
             });
-
         });
-
     }
     $( document ).ready(function() {
         Onstart();
