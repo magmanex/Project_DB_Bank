@@ -91,6 +91,9 @@
                 <br>
                 <div id="customer" class="form-group has-feedback"></div>
                 <hr>
+                <div class="form-group has-feedback">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="approve_btn">Approve</button>
+                </div>
                 <br>
                 <div id="promotion" class="form-group has-feedback">
                     <label class="col-lg-3 control-label">Promotion ID</label>
@@ -314,6 +317,14 @@
                         $("#promotion_rate").val(data.rate);
                         rate = data.rate;
                         $("#promotion_duration").val(data.duration);
+                });
+            }
+
+            function request_customer(id) {
+                $.getJSON("../../api/requestlist_has_customers/" + id , function(data) {
+                    data.forEach(element => {
+                        getCustomerName(element.customers_id);
+                    })
                 });
             }
 
