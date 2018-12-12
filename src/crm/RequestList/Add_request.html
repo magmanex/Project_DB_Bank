@@ -519,6 +519,7 @@
                            approval_date:currentdate,
                            officer_id:officer_id
                        },function(data){
+                            create_user_list(data.id);
                             create_loanlist(amount,currentdate,data.id)
                        })
                    }
@@ -552,6 +553,17 @@
                                }
                            })
                            resolve();
+                       })
+                   }
+
+                   create_user_list = function (id) {
+                       return new Promise(resolve => {
+                           CustomerList.forEach(element => {
+                                $.post("../api/customerList/" , {
+                                    customers_id:element.id,
+                                    loan_id:id
+                                })
+                           })
                        })
                    }
 
