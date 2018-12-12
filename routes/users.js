@@ -12,6 +12,8 @@ db.login.findAll().then( value => {
       var newUser = {username: element.username, password: element.password,status:element.type,id:element.customers_id};
       Users.push(newUser);
    });
+
+   console.log(Users)
 })
 
 

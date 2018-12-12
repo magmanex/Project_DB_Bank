@@ -84,7 +84,7 @@
                         </div>
                         <label class="col-lg-3 control-label">วันที่</label>
                         <div class="col-lg-3">
-                            <input type="text" class="form-control" id="date" value="17/9/2018" readonly>
+                            <input type="text" class="form-control" id="date" readonly>
                         </div>
                 </div>
                 <hr>
@@ -95,12 +95,18 @@
                 <div id="promotion" class="form-group has-feedback">
                     <label class="col-lg-3 control-label">Promotion ID</label>
                     <div class="col-lg-3">
-                        <input type="text" class="form-control" id="promotion_id" value="" >
+                        <select id="pro" name="promotion" class="form-control">
+                            
+                            <!-- <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="fiat">Fiat</option>
+                            <option value="audi">Audi</option> -->
+                        </select>
                     </div>
                 </div>
                 <br>
                 <br>
-               
+                
                 <br>
                 <br>
             
@@ -121,8 +127,8 @@
                                         </label> All
                                     </center></th>
                                   <th><center>ลำดับ</center></th>
-                                  <th><center>ทรัพย์สินค้ำ</center></th>
-                                  <th><center>มูลค่า(บาท)</center></th>
+                                  <th><center>โปรโมชั่น</center></th>
+                                  <th><center>วันเวลา</center></th>
                                 </tr>
                                 <tbody id = new_data></tbody>
                               </table>	
@@ -177,13 +183,26 @@
             var id = 0;
             var old_amount = 0;
             var List = [];
+            var promoArray = []
             $("#header").load("../header.html");
-            var currentdate = new Date();
-                        var datetime =   currentdate.getFullYear() + "-"
-                                    + currentdate.getMonth()  + "-" 
-                                    + currentdate.getDate();
-            document.getElementById("date").value = datetime
-
+            var tmp = new Date();
+            var mount = tmp.getMonth()+1;
+            var datetime = tmp.getFullYear() +"-"+ mount +(tmp.getDate()>9? "-" : "-0")+ tmp.getDate();
+            document.getElementById("date").value = datetime;
+            
+             $.getJSON("../../api/promotion").done(
+                        function(data){ 
+                            var tmp="";
+                               data.forEach(element => { 
+                                console.log(element)
+                                promoArray.push(element)
+                                tmp += `
+                                <option value=" `+ element.id +`"> `+ element.name + " : " +element.detail +`</option>`
+                                       
+                               })
+                            
+                               $("#pro").append(tmp);
+                            } );
 
             function print_table() {
                 var tmp="";
@@ -194,8 +213,8 @@
                                 <tr>
                                 <td><center><label><input type="checkbox" value="`+ i + `"><span class="text"></span></label></center></th>
                                 <td><center>`+ (i + 1) + `</center></td>
-                                <td><center>`+ element.asset_name +`</center></td>
-                                <td><center>`+ element.asset_value +`</center></td>
+                                <td><center>`+ promoArray[element.promotion_id-1].name +`</center></td>
+                                <td><center>`+ element.date +`</center></td>
                                 </tr>`;
                 });
                 $("#new_data").empty();
@@ -298,9 +317,10 @@
                    var datetime =   currentdate.getFullYear() + "-"
                                     + (currentdate.getMonth()+1)  + "-" 
                                     + currentdate.getDate();
+                    var promo_id = $("#pro").val()
                         List.push({
                             status: 'S',
-                            promotion_id:1,
+                            promotion_id:promo_id,
                             date:currentdate
                         });
                        print_table();
