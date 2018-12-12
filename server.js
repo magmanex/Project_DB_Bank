@@ -24,14 +24,19 @@ var usersRouter = require('./routes/users');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 
-app.use(express.static(path.join(__dirname, 'src/customer')));
+
 app.use(cookieParser());
 app.use(session({secret: "ILoveCPE"}));
 
-app.use('/home',function(req,res){
+app.get('/',function(req,res){
     console.log(req.session.user)
-    if(!req.session.user) res.send("error")
-    res.sendFile(path.join(__dirname, 'index.html'));   
+    if(!req.session.user) { 
+        res.sendFile(path.join(__dirname+'/src/login.html'));
+}
+    else{
+        app.use(express.static(path.join(__dirname, 'src/customer')));
+        res.sendFile(path.join(__dirname, 'src/customer/index.html'));   
+    }
     
 });
 app.use('/users', usersRouter);

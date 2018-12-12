@@ -30,10 +30,11 @@ router.post('/signup', function(req, res){
                message: "User Already Exists! Login or choose another user id"});
          }
       });
-      var newUser = {username: req.body.username, password: req.body.password};
+      var newUser = {username: req.body.username, password: req.body.password,status:"customer"};
       Users.push(newUser);
       req.session.user = newUser;
       req.session.save()
+      console.log(Users)
   
    }
 });
@@ -62,7 +63,7 @@ router.post('/login', function(req, res){
       Users.filter(function(user){
          if(user.username === req.body.username && user.password === req.body.password){
             req.session.user = user;
-            res.redirect('/../');
+           // res.redirect('/../');
           
          }
       });
