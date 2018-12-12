@@ -76,7 +76,7 @@ moneyStock.belongsTo(typeStock,{as : 'type', foreignKey: 'typeStock_id'})
 
 //requestlist
 requestlist.belongsTo(promotion,{foreignKey: 'promotion_id' , targetKey: 'id'  })
-requestlist.belongsTo(customers,{foreignKey: 'customers_id' ,  targetKey: 'id'  })
+//requestlist.belongsTo(customers,{foreignKey: 'customers_id' ,  targetKey: 'id'  })
 //requestlist.belongsTo(promotion,{foreignKey: 'promotion_rate' , targetKey: 'rate'  })
 //requestlist.belongsTo(promotion,{foreignKey: 'promotion_duration' , targetKey: 'duration'  })
 
