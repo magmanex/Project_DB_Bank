@@ -247,7 +247,8 @@
                         $("#promotion_id").val(data.promotion_id);
                         if(data.listapprove == "S") {
                             var item = ""
-                            item = `<a href="#" id="update_btn" class="btn">Update</a>
+                            item = `
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" id="update_btn">Update</button>
                                     <a href="../RequestList/request_listview.html" class="btn">ย้อนกลับ</a>`;
                             $("#footage_btn").append(item)
                         } else if(data.listapprove == "W") {
@@ -344,34 +345,6 @@
 
                //Save Button
                $("#save_btn").click(async function () {
-
-                   save_list = function() {
-                       return new Promise(resolve =>{
-                           List.forEach(function ( element) {
-                                $.post("../api/loanlist/" ,{
-                                    id:null,
-                                    amount:element.amount,
-                                    DATE:element.DATE,
-                                    loanleft:element.loanleft,
-                                    loan_id:parseInt($("#id").val())
-                                },function(data){
-                                    create_moneyStock(data.id,element.amount,data.loan_id);
-                                });
-                           });
-                           resolve();
-                       })
-                   }
-
-                   update_loan = function () {
-                       return new Promise(resolve => {
-                           $.post("../api/loanUpdate/" + id , {
-                               id: parseInt($("#id").val()),
-                               amount:old_amount
-                           })
-                           resolve();
-                       })
-                   }
-
                    create_moneyStock = function (_id,_amount,_idLoan) {
                        return new Promise(resolve => {
                            $.post("../api/moneystockGetLast" , {
@@ -384,9 +357,51 @@
                            resolve();
                        })
                    }
+
                    await save_list();
                    await update_loan();
                    location.reload();
+               })
+
+               
+            });
+
+            $(window).load(function() {
+                $("#update_btn").click(async function () {
+                   console.log("test")
+                    save_list = function() {
+                       return new Promise(resolve =>{
+                           List.forEach(function ( element) {
+                                $.post("../api/loanlist/" ,{
+                                    id:null,
+                                    name:element.asset_name,
+                                    cost:element.asset_value,
+                                    request_list_id:parseInt($("#id").val())
+                                },function(data){
+                                    // create_moneyStock(data.id,element.amount,data.loan_id);
+                                });
+                           });
+                           resolve();
+                       })
+                   }
+
+
+
+                   update_request = function () {
+                       return new Promise(resolve => {
+                           $.post("../api/requestUpdate/" + $("#id").val(), {
+                               id: parseInt($("#id").val()),
+                               amount:$("#total").val(),
+                               listapprove:"W"
+                           },function(status){
+                               alert(status)
+                           })
+                           resolve();
+                       })
+                   }
+
+                   await update_request();
+                //    await save_list();
                })
             });
 

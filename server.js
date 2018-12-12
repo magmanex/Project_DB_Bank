@@ -55,6 +55,8 @@ app.post('/api/requestlist', requestlist.create);
 app.get('/api/requestlist/:Id', requestlist.findById);
 app.put('/api/requestlist/:Id', requestlist.update);
 app.delete('/api/requestlist/:Id',requestlist.delete);
+app.post('/api/requestUpdate/:Id' , requestlist.update);
+
 
 app.get('/api/loan' , loan.findAll);
 app.post('/api/loan' , loan.create);
