@@ -6,7 +6,7 @@ module.exports = (sequelize, type) => {
           autoIncrement: true
         },
         name: type.STRING,
-        detail : type.STRING,
+        detail : type.TEXT,
         exp : type.DATE,
         rate : type.FLOAT,
         duration : type.INTEGER
