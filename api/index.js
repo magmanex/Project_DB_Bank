@@ -77,7 +77,7 @@ calendar_crm.belongsTo(requestlist,{ foreignKey: 'requestlist_id' , targetKey: '
 
 //loan
 loan.belongsTo(officer,{foreignKey:'officer_id' , targetKey: 'id'})
-loan.belongsTo(officer,{foreignKey:'debt_id' , targetKey: 'id'})
+
 
 //loanlist
 loanlist.belongsTo(loan,{foreignKey:'loan_id' , targetKey:'id'})
