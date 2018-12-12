@@ -212,7 +212,7 @@
                 });
                 $("#new_data").empty();
                 $("#new_data").append(tmp);
-                $("#total").val(total);
+                calculate_total(total);
             }
 
             async function check_value(_id,_amount){
@@ -223,6 +223,13 @@
                     List[_id].loanleft += parseFloat(_amount);
                     check_value(++_id,_amount);
                 }
+            }
+
+            function calculate_total(_value){
+                var rate = $("#promotion_rate").val();
+                var interest = parseFloat(_value)*(rate/100);
+                var total = _value+interest;
+                $("#total").val(total);
             }
 
             function alertStatement(link) {
@@ -314,22 +321,8 @@
                             req_id:id
                         });
                        print_table();
-                //    if(money1 == money2) {
-                //        if(parseFloat(money1) > old_amount) {
-                //            alert("กรอกเงินเกินจำนวน กรุณาตรวจสอบใหม่");
-                //            return;
-                //        }
-                //        old_amount -= parseFloat(money1);
-                //        //Add data to list
-                //        List.push({
-                //             asset_name: money1,
-                //             asset_value: parseFloat(money2),
-                //             req_id:id
-                //        });
-                //        print_table();
-                //    } else {
-                //        alert("กรุณากรอกเงินให้ตรงกัน")
-                //    }
+                       $("#money1").val("");
+                       $("#money2").val("");
                });
 
                //for remove list
