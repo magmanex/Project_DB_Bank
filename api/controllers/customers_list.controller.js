@@ -1,9 +1,5 @@
 const db = require('../index')
 
-exports.findAll = (req, res) => {
-    db.customersList.findAll().then(stock => res.json(stock))
-}
-
 
 //Create
 exports.create = (req, res) => {
@@ -23,6 +19,19 @@ exports.create = (req, res) => {
 exports.findById = (req, res) => {
 
     db.customersList.findById(req.params.Id)
+    .then(stock => {
+            if (!stock){
+                return res.status(404).json({message: "Stock Not Found"})
+            }
+            return res.status(200).json(stock)
+        }
+    )
+    .catch(error => res.status(400).send(error));
+}
+
+exports.findAll = (req, res) => {
+console.log(req.body)
+    db.customersList.findAll({ where: { customers_id: req.body.customers_id} })
     .then(stock => {
             if (!stock){
                 return res.status(404).json({message: "Stock Not Found"})

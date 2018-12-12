@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser');
 
 //api
 const customer = require('./api/controllers/customers.controller')
+const customerlist = require('./api/controllers/customers_list.controller')
 const moneystock = require('./api/controllers/moneystock.controller');
 const promotion = require('./api/controllers/promotion.controller');
 const officer = require('./api/controllers/officer.controller');
@@ -57,6 +58,13 @@ app.get('/api/moneystock', moneystock.findAll);
 app.post('/api/moneystock', moneystock.create);
 app.get('/api/moneystock/:Id', moneystock.findById);
 app.put('/api/moneystock/:Id', moneystock.update);
+
+//Find All
+app.get('/api/customerlist', customerlist.findAll);
+app.post('/api/customerlist', customerlist.create);
+app.get('/api/customerlist/:Id', customerlist.findById);
+app.put('/api/customerlist/:Id', customerlist.update);
+
 
 //test moneystock
 app.post('/api/moneystockGetLast' , moneystock.getLast)
