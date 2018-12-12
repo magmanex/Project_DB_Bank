@@ -236,7 +236,6 @@
                 if(List[_id] == null) {
                     return;
                 } else {
-                    console.log(_id)
                     List[_id].loanleft += parseFloat(_amount);
                     check_value(++_id,_amount);
                 }
@@ -436,7 +435,6 @@
 
             $(window).load(function() {
                 $("#update_btn").click(async function () {
-                   console.log("test")
                     save_list = function() {
                        return new Promise(resolve =>{
                            List.forEach(function ( element) {
@@ -454,7 +452,20 @@
                        })
                    }
 
-
+                   create_user_list = function(){
+                       if(CustomerList.length > 1) {
+                           CustomerList.shift();
+                           CustomerList.forEach(element => {
+                            return new Promise(resolve => {
+                                $.post("../../api/requestlist_has_customers" , {
+                                    requestlist_id:parseInt($("#id").val()),
+                                    customers_id:element.id
+                                })
+                                resolve();
+                            });
+                           });
+                       }
+                   }
 
                    update_request = function () {
                        return new Promise(resolve => {
@@ -468,7 +479,7 @@
                            resolve();
                        })
                    }
-
+                   await create_user_list();
                    await update_request();
                    await save_list();
                });
