@@ -38,6 +38,8 @@ exports.findById = (req, res) => {
     .catch(error => res.status(400).send(error));
 }
 
+
+
 exports.update = (req, res) => {
 	return db.customers.findById(req.params.Id)
 		.then(

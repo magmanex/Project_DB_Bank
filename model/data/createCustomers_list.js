@@ -18,7 +18,7 @@ var customer_list = [
                     loan_id:1
                 },
                 {
-                    customers_id:1,
-                    loan_id:1
+                    customers_id:2,
+                    loan_id:2
                 }
                 ]

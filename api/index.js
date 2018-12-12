@@ -76,7 +76,7 @@ moneyStock.belongsTo(typeStock,{as : 'type', foreignKey: 'typeStock_id'})
 
 //requestlist
 requestlist.belongsTo(promotion,{foreignKey: 'promotion_id' , targetKey: 'id'  })
-requestlist.belongsTo(customers,{foreignKey: 'customers_id' ,  targetKey: 'id'  })
+//requestlist.belongsTo(customers,{foreignKey: 'customers_id' ,  targetKey: 'id'  })
 //requestlist.belongsTo(promotion,{foreignKey: 'promotion_rate' , targetKey: 'rate'  })
 //requestlist.belongsTo(promotion,{foreignKey: 'promotion_duration' , targetKey: 'duration'  })
 
@@ -92,7 +92,6 @@ calendar_crm.belongsTo(requestlist,{ foreignKey: 'requestlist_id' , targetKey: '
 
 //loan
 loan.belongsTo(officer,{foreignKey:'officer_id' , targetKey: 'id'})
-loan.belongsTo(officer,{foreignKey:'debt_id' , targetKey: 'id'})
 //loanlist
 loanlist.belongsTo(loan,{foreignKey:'loan_id' , targetKey:'id'})
 

@@ -22,7 +22,9 @@ exports.create = (req, res) => {
 //Find by Id
 exports.findById = (req, res) => {
 
-    db.asset.findById(req.params.Id)
+    db.asset.findAll({
+        where:{request_list_id: req.params.Id}
+    })
     .then(stock => {
             if (!stock){
                 return res.status(404).json({message: "Stock Not Found"})
