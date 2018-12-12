@@ -444,14 +444,73 @@
                            $.post("../api/requestUpdate/" + $("#id").val(), {
                                id: parseInt($("#id").val()),
                                listapprove:"Y"
-                           },function(status){
-                               alert(status)
+                           },function(data){
                            })
                            resolve();
                        })
                    }
 
-                   await update_request();
+                   create_moneyStock = function (_id,_amount,_idloan) {
+                       return new Promise(resolve => {
+                           $.post("../api/moneystockGetLast" , {
+                               id:null,
+                               amount:_amount,
+                               typeStock_id:1,
+                               loanlist_id:_id,
+                               loanlist_id_fromloan:_idloan
+                           })
+                           resolve();
+                       })
+                   }
+                   
+                   create_loan = function (amount,rate,officer_id) {
+                       var currentdate = new Date();
+                       $.post("../api/loan" , {
+                           amount:amount,
+                           interestrate:rate,
+                           totalamount:amount,
+                           time:currentdate,
+                           approval_date:currentdate,
+                           officer_id:officer_id
+                       },function(data){
+                            create_loanlist(amount,currentdate,data.id)
+                       })
+                   }
+
+                   create_loanlist = function(amount,currentdate,loan_id) {
+                       return new Promise(resolve =>{
+                            $.post("../api/loanlist/" ,{
+                                    id:null,
+                                    amount:-amount,
+                                    DATE:currentdate,
+                                    loanleft:amount,
+                                    loan_id:loan_id
+                                },function(data){
+                                    create_moneyStock(data.id,amount,data.loan_id);
+                                });
+                           resolve();
+                       })
+                   }
+
+                   check_moneyStock = function (amount) {
+                       return new Promise(resolve => {
+                           $.get("../api/moneystockCheck/" ,
+                           function(data){
+                               if(parseFloat(data.stock) >  parseFloat(amount)){
+                                    update_request();
+                                    //wait for dev
+                                    create_loan(amount,rate,1);
+                               } else {
+                                   alert("ไม่สามารถอนุมัติได้ เนื่องจากเงินในคลังไม่เพียงพอ")
+                                   return;
+                               }
+                           })
+                           resolve();
+                       })
+                   }
+
+                //    await update_request();
+                await check_moneyStock($("#total").val());
                });
 
                $("#disapprove_btn").click(async function(){
@@ -460,13 +519,11 @@
                            $.post("../api/requestUpdate/" + $("#id").val(), {
                                id: parseInt($("#id").val()),
                                listapprove:"N"
-                           },function(status){
-                               alert(status)
+                           },function(data){
                            })
                            resolve();
                        })
                    }
-
                    await update_request();
                });
             });

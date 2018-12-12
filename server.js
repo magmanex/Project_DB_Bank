@@ -59,6 +59,7 @@ app.put('/api/moneystock/:Id', moneystock.update);
 
 //test moneystock
 app.post('/api/moneystockGetLast' , moneystock.getLast)
+app.get('/api/moneystockCheck/' , moneystock.check)
 
 app.get('/api/promotion', promotion.findAll);
 app.post('/api/promotion', promotion.create);
