@@ -1,5 +1,5 @@
 module.exports = (sequelize, type) => {
-    return sequelize.define('calendar_debt', {
+    return sequelize.define('requestlist_has_customers', {
         id: {
             type: type.INTEGER,
             primaryKey: true,
@@ -7,7 +7,7 @@ module.exports = (sequelize, type) => {
           },
         
     },{
-        tableName: 'calendar_debt',
+        tableName: 'requestlist_has_customers',
         createdAt: false,
         updatedAt: false
       })

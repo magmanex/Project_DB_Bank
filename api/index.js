@@ -12,6 +12,9 @@ const calendar_crmModel = require('../model/calendar_crm')
 const calendar_debtModel = require('../model/calendar_debt')
 const promotionModel = require('../model/promotion')
 const customersListModel = require('../model/customers_list')
+const assetModel = require('../model/asset')
+const requestlist_has_customersModel = require('../model/requestlist_has_customers')
+
 
 //import data
 const typeStockData = require('../model/data/createTypeStock')
@@ -56,8 +59,18 @@ const calendar_crm= calendar_crmModel(sequelize, Sequelize)
 const calendar_debt= calendar_debtModel(sequelize, Sequelize)
 const promotion= promotionModel(sequelize, Sequelize)
 const customersList= customersListModel(sequelize, Sequelize)
+const asset = assetModel(sequelize, Sequelize)
+const requestlist_has_customers = requestlist_has_customersModel(sequelize, Sequelize)
+
 
 //ORM
+
+
+//customerslist
+customersList.belongsTo(customers,{foreignKey: 'customers_id', targetKey: 'id'})
+customersList.belongsTo(loan,{foreignKey: 'loan_id', targetKey: 'id'})
+
+
 //moneyStock
 moneyStock.belongsTo(typeStock,{as : 'type', foreignKey: 'typeStock_id'})
 
@@ -71,14 +84,15 @@ requestlist.belongsTo(customers,{foreignKey: 'customers_id' ,  targetKey: 'id'  
 login.belongsTo(customers,{ foreignKey: 'customers_id' , targetKey: 'id' })
 login.belongsTo(officer,{ foreignKey: 'officer_id' ,  targetKey: 'id' })
 
+
 //calendar crm
 calendar_crm.belongsTo(officer,{foreignKey:'officer_id' , targetKey: 'id'})
 calendar_crm.belongsTo(requestlist,{ foreignKey: 'requestlist_id' , targetKey: 'id'})
 
+
 //loan
 loan.belongsTo(officer,{foreignKey:'officer_id' , targetKey: 'id'})
 loan.belongsTo(officer,{foreignKey:'debt_id' , targetKey: 'id'})
-
 //loanlist
 loanlist.belongsTo(loan,{foreignKey:'loan_id' , targetKey:'id'})
 
@@ -92,6 +106,13 @@ calendar_debt.belongsTo(loan,{foreignKey: 'loan_id' , targetKey: 'id'})
 //customers list
 customersList.belongsTo(customers,{foreignKey: 'customers_id' , targetKey: 'id'})
 customersList.belongsTo(loan,{foreignKey: 'loan_id' , targetKey: 'id'})
+
+//asset
+asset.belongsTo(requestlist,{foreignKey: 'requestlist_id' , targetKey: 'id'})
+
+//requestlist_has_customers
+requestlist_has_customers.belongsTo(requestlist,{foreignKey: 'requestlist_id' , targetKey: 'id'})
+requestlist_has_customers.belongsTo(customers,{foreignKey: 'customers_id' , targetKey: 'id'})
 
 
 //moneyStock.findAll({include: [ { model: typeStock, as: 'type' } ]}).then(function(res) {
@@ -134,6 +155,7 @@ module.exports = {
     calendar_crm,
     calendar_debt,
     promotion,
-    customersList
-        
+    customersList,
+    asset,
+    requestlist_has_customers
 }

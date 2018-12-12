@@ -11,7 +11,8 @@ module.exports = (sequelize, type) => {
         amount: type.FLOAT,
         interestrate : type.FLOAT,
         totalamount : type.FLOAT,
-        time : type.DATE
+        time : type.DATE,
+        approval_date : type.DATE
     },{
         tableName: 'loan',
         createdAt: false,
