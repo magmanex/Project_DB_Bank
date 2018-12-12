@@ -103,12 +103,12 @@
                 <br>
                 <div align="right">
                         <button type="button" class="btn btn-default" data-dismiss="modal" id="add_list">เพิ่มรายการ</button>
-                    <a href="#" class="btn">ยกเลิกรายการ</a>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id="remove_list">ยกเลิกรายการ</button>
                 </div>
 				<div class="row">                    
 				<div class="col-sm-12">
                     <hr>
-                        <table id = "new_data">
+                        <table id = "new_table">
                                 <tr>
                                   <th><center>
                                         <label>
@@ -119,6 +119,7 @@
                                   <th><center>จำนวนเงิน</center></th>
                                   <th><center>สร้างโดย</center></th>
                                 </tr>
+                                <tbody id = new_data></tbody>
                               </table>	
                         <hr>
                         <table id = "old_data">
@@ -179,6 +180,32 @@
             var List = [];
             $("#header").load("../header.html");
 
+            function print_table() {
+                var tmp="";
+                List.forEach(function (element, i) {
+                    tmp += `
+                                <tr>
+                                <td><center><label><input type="checkbox" value="`+ i + `"><span class="text"></span></label></center></th>
+                                <td><center>`+ (i + 1) + `</center></td>
+                                <td><center>`+ element.amount +`</center></td>
+                                <td><center>`+ element.DATE +`</center></td>
+                                <td><center>`+ element.loanleft+`</center></td>
+                                </tr>`;
+                });
+                $("#new_data").empty();
+                $("#new_data").append(tmp);
+            }
+
+            async function check_value(_id,_amount){
+                if(List[_id] == null) {
+                    return;
+                } else {
+                    console.log(_id)
+                    List[_id].loanleft += parseFloat(_amount);
+                    check_value(++_id,_amount);
+                }
+            }
+
             function alertStatement(link) {
                 var url = new URL(link);
                 id = parseInt(url.searchParams.get("id"));
@@ -223,25 +250,40 @@
                                     // + currentdate.getMinutes() + ":" 
                                     // + currentdate.getSeconds();
                    if(money1 == money2) {
-                       old_amount -= parseInt(money1);
-                       var tmp = "";
-                       tmp += `<tr><td><center>`+ 1+`</center></td>
-                                <td><center>`+ money1 +`</center></td>
-                                <td><center>`+ datetime +`</center></td>
-                                <td><center>`+ old_amount+`</center></td>`;
-                       $("#new_data").append(tmp);
+                       if(parseFloat(money1) > old_amount) {
+                           alert("กรอกเงินเกินจำนวน กรุณาตรวจสอบใหม่");
+                           return;
+                       }
+                       old_amount -= parseFloat(money1);
                        //Add data to list
                        List.push({
-                            amount: parseInt(money1),
+                            amount: parseFloat(money1),
                             DATE: datetime,
-                            loanleft: parseInt(old_amount),
+                            loanleft: parseFloat(old_amount),
                             load_id:id
                        });
-                       console.log(List)
+                       print_table();
                    } else {
                        alert("กรุณากรอกเงินให้ตรงกัน")
                    }
                });
+
+               //for remove list
+                $("#remove_list").click(async function () {
+                    var id = $("#new_data input:checked").map(function () {
+                        return $(this).attr("value")
+                    }).get()
+                    if (id.length != 0) {
+                        for (var count = id.length; count > 0; count--) {
+                            console.log("from remove list : " + id[count])
+                            old_amount += parseFloat(List[id[count - 1]].amount)
+                            await check_value(id[count - 1],List[id[count - 1]].amount)
+                            List.splice(id[count - 1], 1)
+                        }
+                        print_table()
+                    }
+                    else return
+                });
 
                //Save Button
                $("#save_btn").click(async function () {
@@ -255,8 +297,9 @@
                                     DATE:element.DATE,
                                     loanleft:element.loanleft,
                                     loan_id:parseInt($("#id").val())
+                                },function(data){
+                                    create_moneyStock(data.id,element.amount,data.loan_id);
                                 });
-                                create_moneyStock(element.amount);
                            });
                            resolve();
                        })
@@ -272,11 +315,14 @@
                        })
                    }
 
-                   create_moneyStock = function (_amount) {
+                   create_moneyStock = function (_id,_amount,_idLoan) {
                        return new Promise(resolve => {
                            $.post("../api/moneystockGetLast" , {
                                id:null,
-                               amount:_amount
+                               amount:_amount,
+                               typeStock_id:1,
+                               loanlist_id:_id,
+                               loanlist_id_fromloan:_idLoan
                            })
                            resolve();
                        })

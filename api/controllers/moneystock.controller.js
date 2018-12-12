@@ -11,7 +11,7 @@ exports.create = (req, res) => {
     db.moneyStock.create({  
             amount: req.body.amount,
             total: req.body.total,
-            typeStock_id : req.body.typeStock_id
+            typeStock_id : req.body.typeStock_id,
         })
         .then(data => {		
             res.json(data);
@@ -66,7 +66,10 @@ exports.getLast = (req ,res) => {
         var result = parseFloat(entries[0].total) + parseFloat(req.body.amount);
         db.moneyStock.create({
             amount:req.body.amount,
-            total:result
+            total:result,
+            typeStock_id:req.body.typeStock_id,
+            loanlist_id:req.body.loanlist_id,
+            loanlist_id_fromloan:req.body.loanlist_id_fromloan
         }).then(data => {
             res.json(data);
         })
