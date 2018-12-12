@@ -25,7 +25,7 @@ exports.findAll = async (req, res) => {
                                 List.push({
                                     id:tmp.id,
                                     firstname:tmp.firstname,
-                                    time:tmp.time,
+                                    time:element.time,
                                     phone:tmp.phone
                                 });
                                 console.log("Test push " + List.length)

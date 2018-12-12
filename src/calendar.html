@@ -112,7 +112,7 @@
         
         <script>
             $("#header").load("../header.html");
-            $.getJSON( "../api/calendar_debt", function( val ) {
+            $.getJSON( "../api/calendar_debt", function( data ) {
                 var items = "";
                  
                 $.each( data, function( key, val ) {
