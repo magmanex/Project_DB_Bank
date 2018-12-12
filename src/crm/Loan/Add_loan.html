@@ -88,6 +88,7 @@
                         </div>
                 </div>
                 <hr>
+                <div id="customer" class="form-group has-feedback"></div>
                 <br>
                 <div class="form-group has-feedback">
                         <label class="col-lg-3 control-label">จำนวนเงิน</label>
@@ -177,6 +178,7 @@
             //Global variable
             var id = 0;
             var old_amount = 0;
+            var CustomerList = [];
             var List = [];
             $("#header").load("../header.html");
 
@@ -212,6 +214,7 @@
                 if(id !== null){
                     $.getJSON("../../api/loanlist/" + id , function(data) {
                         var tmp = "";
+                        request_customer(id);
                         data.forEach(function(element , i ) {
                             tmp += `<tr><td><center>`+ parseInt(i+1)+`</center></td>
                                 <td><center>`+ element.amount +`</center></td>
@@ -230,6 +233,44 @@
             function load_old_amount() {
                 $.getJSON("../../api/loan/" + id , function(data) {
                            old_amount = parseInt(data.amount);
+                });
+            }
+
+            function getCustomerName(id) {
+                $.getJSON("../../api/customer/" + id , function(data) {
+                    CustomerList.push({
+                        id:id,
+                        firstname:data.firstname,
+                        surname:data.surname
+                    });
+                    printCustomer();
+                });
+            }
+
+            function printCustomer(){
+                console.log(CustomerList)
+                var item = "";
+                CustomerList.forEach(element =>{
+                           item += `
+                            <label class="col-lg-3 control-label">ชื่อลูกค้า</label>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control" id="fname" value="`+element.firstname+`" readonly>
+                            </div>
+                            <label class="col-lg-3 control-label">นามสกุล</label>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control" id="lname" value="`+element.surname+`" readonly>
+                            </div>
+                        `;
+                })
+                $("#customer").empty();
+                $("#customer").append(item);
+            }
+
+            function request_customer(id) {
+                $.getJSON("../../api/customerlist/" + id , function(data) {
+                    data.forEach(element => {
+                        getCustomerName(element.customers_id);
+                    })
                 });
             }
 
