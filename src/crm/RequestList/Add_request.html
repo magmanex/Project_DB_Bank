@@ -91,8 +91,12 @@
                 <br>
                 <div id="customer" class="form-group has-feedback"></div>
                 <hr>
-                <div class="form-group has-feedback">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" id="approve_btn">Approve</button>
+                <div id="AddCustomer" class="form-group has-feedback">
+                    <label class="col-lg-3 control-label">CustomerID</label>
+                    <div class="col-lg-3">
+                            <input type="text" class="form-control" id="customer_id" value="">
+                        </div>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="add_customer">เพิ่มผู้กู้</button>
                 </div>
                 <br>
                 <div id="promotion" class="form-group has-feedback">
@@ -207,6 +211,7 @@
             var old_amount = 0;
             var List = [];
             var rate = 0;
+            var CustomerList = [];
             $("#header").load("../header.html");
 
             function print_table() {
@@ -256,6 +261,7 @@
                         $("#id").val(data.id);
                         $("#date").val(data.date)
                         $("#promotion_id").val(data.promotion_id);
+                        request_customer(data.id);
                         request_promotion(data.promotion_id)
                         if(data.listapprove == "S") {
                             $("#old_table").hide();
@@ -269,6 +275,7 @@
                             $("#list").hide();
                             $("#new_table").hide();
                             $("#supply").hide();
+                            $("#AddCustomer").hide();
                             var item = ""
                             item = `
                                     <button type="button" class="btn btn-default" data-dismiss="modal" id="approve_btn">Approve</button>
@@ -281,7 +288,6 @@
                                     <a href="../RequestList/request_listview.html" class="btn">ย้อนกลับ</a>`;
                             $("#footage_btn").append(item)
                         }
-                        getCustomerName(data.customers_id)
                     });
                 } else {
                     $("#old_data").hide();
@@ -297,19 +303,32 @@
 
             function getCustomerName(id) {
                 $.getJSON("../../api/customer/" + id , function(data) {
-                           var item = "";
-                           item = `
+                    CustomerList.push({
+                        id:id,
+                        firstname:data.firstname,
+                        surname:data.surname
+                    });
+                    printCustomer();
+                });
+            }
+
+            function printCustomer(){
+                console.log(CustomerList)
+                var item = "";
+                CustomerList.forEach(element =>{
+                           item += `
                             <label class="col-lg-3 control-label">ชื่อลูกค้า</label>
                             <div class="col-lg-3">
-                                <input type="text" class="form-control" id="fname" value="`+data.firstname+`" readonly>
+                                <input type="text" class="form-control" id="fname" value="`+element.firstname+`" readonly>
                             </div>
                             <label class="col-lg-3 control-label">นามสกุล</label>
                             <div class="col-lg-3">
-                                <input type="text" class="form-control" id="lname" value="`+data.surname+`" readonly>
+                                <input type="text" class="form-control" id="lname" value="`+element.surname+`" readonly>
                             </div>
                         `;
-                        $("#customer").append(item);
-                });
+                })
+                $("#customer").empty();
+                $("#customer").append(item);
             }
 
             function request_promotion(id) {
@@ -369,6 +388,11 @@
                        $("#money1").val("");
                        $("#money2").val("");
                });
+
+               $("#add_customer").click(function() {
+                   var id = $("#customer_id").val();
+                   getCustomerName(id);
+               })
 
                //for remove list
                 $("#remove_list").click(async function () {
