@@ -12,6 +12,7 @@ const requestlist = require('./api/controllers/requestlist.controller');
 const loan = require('./api/controllers/loan.controller');
 const loanlist = require('./api/controllers/loanlist.controller');
 const calendar_debt = require('./api/controllers/calendar_debt.controller');
+const requestlist_has_customers = require('./api/controllers/requestlist_has_customers.controller');
 
 const app = express()
 
@@ -67,6 +68,10 @@ app.post('/api/loanlist/' , loanlist.create)
 
 //created by dai 
 app.get('/api/calendar_debt' , calendar_debt.findAll)
+
+app.get('/api/requestlist_has_customers' , requestlist_has_customers.findAll)
+app.get('/api/requestlist_has_customers/:Id' , requestlist_has_customers.findById)
+app.post('/api/requestlist_has_customers' , requestlist_has_customers.create)
 
 //Server
 const port = 8080
