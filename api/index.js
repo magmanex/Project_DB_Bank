@@ -107,7 +107,7 @@ customersList.belongsTo(customers,{foreignKey: 'customers_id' , targetKey: 'id'}
 customersList.belongsTo(loan,{foreignKey: 'loan_id' , targetKey: 'id'})
 
 //asset
-asset.belongsTo(requestlist,{foreignKey: 'requestlist_id' , targetKey: 'id'})
+asset.belongsTo(requestlist,{foreignKey: 'request_list_id' , targetKey: 'id'})
 
 //requestlist_has_customers
 requestlist_has_customers.belongsTo(requestlist,{foreignKey: 'requestlist_id' , targetKey: 'id'})

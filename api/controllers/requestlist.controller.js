@@ -34,26 +34,42 @@ exports.findById = (req, res) => {
 }
 
 exports.update = (req, res) => {
-	return db.requestlist.findById(req.params.Id)
-		.then(
-			stock => {
-				if(!stock){
-					return res.status(404).json({
-						message: 'stock Not Found',
-					});
-				}
-				return stock.update({
-                                amount: req.body.amount,
-                                total: req.body.total,
-                                typeStock_id : req.body.typeStock_id
-									},{ 
-                                        where: { id: req.params.id } 
-                                    })
-									.then(() => res.status(200).json(stock))
-									.catch((error) => res.status(400).send(error));
-				}
-			)
-		.catch((error) => res.status(400).send(error));			 
+    db.requestlist.findById(req.params.Id)
+    .then(stock => {
+            if (!stock){
+                return res.status(404).json({message: "Stock Not Found"})
+            }
+            return stock.update({
+                                    amount: req.body.amount,
+                                    listapprove: req.body.listapprove,
+                                    typeStock_id : req.body.typeStock_id
+                                        },{ 
+                                            where: { id: req.params.id } 
+                                        })
+                                        .then(() => res.status(200).json(stock))
+                                        .catch((error) => res.status(400).send(error));
+                // 			}
+        }
+    )
+    .catch(error => res.status(400).send(error));
+	// return db.requestlist.findById(1)
+	// 	.then(
+	// 		stock => {
+	// 			if(!stock){
+	// 				res.send(req);
+	// 			}
+	// 			return stock.update({
+    //                     amount: req.body.amount,
+    //                     total: req.body.total,
+    //                     typeStock_id : req.body.typeStock_id
+    //                         },{ 
+    //                             where: { id: req.params.id } 
+    //                         })
+    //                         .then(() => res.status(200).json(stock))
+    //                         .catch((error) => res.status(400).send(error));
+	// 			}
+	// 		)
+	// 	.catch((error) => res.status(400).send(error));			 
 };
 
 
