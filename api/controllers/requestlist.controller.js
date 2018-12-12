@@ -8,10 +8,11 @@ exports.findAll = (req, res) => {
 //Create
 exports.create = (req, res) => {
     //Id is auto increment
+    console.log(req.body)
     db.requestlist.create({  
-            amount: req.body.amount,
-            total: req.body.total,
-            typeStock_id : req.body.typeStock_id
+            date:req.body.date,
+            promotion_id: req.body.promotion_id,
+            listapprove : req.body.status
         })
         .then(data => {		
             res.json(data);

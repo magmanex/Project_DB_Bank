@@ -65,7 +65,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
-						<h1>สร้างใบกู้เงิน</h1>
+						<h1>ร้องขอการกู้เงิน</h1>
 					</div>
 				</div>
 			</div>
@@ -74,7 +74,7 @@
 		
         <div class="section">
 	    	<div class="container">
-                <h2>สร้างใบกู้เงิน</h2>
+                <h2>ใบกู้เงิน</h2>
                 <hr>
 
                 <div class="form-group has-feedback">
@@ -95,33 +95,15 @@
                 <div id="promotion" class="form-group has-feedback">
                     <label class="col-lg-3 control-label">Promotion ID</label>
                     <div class="col-lg-3">
-                        <input type="text" class="form-control" id="promotion_id" value="" readonly>
-                    </div>
-                    <label class="col-lg-3 control-label">rate</label>
-                    <div class="col-lg-3">
-                        <input type="text" class="form-control" id="promotion_rate" value="" readonly>
+                        <input type="text" class="form-control" id="promotion_id" value="" >
                     </div>
                 </div>
                 <br>
                 <br>
-                <div class="form-group has-feedback">
-                    <label class="col-lg-3 control-label">Duration</label>
-                    <div class="col-lg-3">
-                        <input type="text" class="form-control" id="promotion_duration" value="" readonly>
-                    </div>
-                </div>
+               
                 <br>
                 <br>
-                <div class="form-group has-feedback">
-                        <label class="col-lg-3 control-label">สินทรัพย์ค้ำประกัน</label>
-                        <div class="col-lg-3">
-                            <input type="text" class="form-control" id="money1" value="" >
-                        </div>
-                        <label class="col-lg-3 control-label">มูลค่าทรัพย์สิน</label>
-                        <div class="col-lg-3">
-                            <input type="text" class="form-control" id="money2" value="" >
-                        </div>
-                </div>
+            
                 <br>
                 <br>
                 <div align="right">
@@ -196,6 +178,12 @@
             var old_amount = 0;
             var List = [];
             $("#header").load("../header.html");
+            var currentdate = new Date();
+                        var datetime =   currentdate.getFullYear() + "-"
+                                    + currentdate.getMonth()  + "-" 
+                                    + currentdate.getDate();
+            document.getElementById("date").value = datetime
+
 
             function print_table() {
                 var tmp="";
@@ -306,24 +294,26 @@
 
                //Add List button 
                $("#add_list").click(function () {
-                   var money1 = $("#money1").val();
-                   var money2 = $("#money2").val();
                    var currentdate = new Date(); 
                    var datetime =   currentdate.getFullYear() + "-"
                                     + (currentdate.getMonth()+1)  + "-" 
                                     + currentdate.getDate();
-                                    // + "T"  
-                                    // + currentdate.getHours() + ":"  
-                                    // + currentdate.getMinutes() + ":" 
-                                    // + currentdate.getSeconds();
                         List.push({
-                            asset_name: money1,
-                            asset_value: parseFloat(money2),
-                            req_id:id
+                            status: 'S',
+                            promotion_id:1,
+                            date:currentdate
                         });
                        print_table();
-                       $("#money1").val("");
-                       $("#money2").val("");
+                       $.post("../../api/requestlist",List[0]).done(function(data) { 
+                           
+                        console.log(data.id)
+                        $.getJSON("../../users/profile",).done(function(val) {
+                            
+                            $.post("../../api/requestlist_has_customers",{requestlist_id:data.id,customers_id:val}).done(function(data) {
+})
+})       
+                        })
+                      
                });
 
                //for remove list

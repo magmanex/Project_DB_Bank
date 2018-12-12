@@ -9,7 +9,7 @@ const db = require('../api/index')
 db.login.findAll().then( value => {
 
    value.forEach(element => {
-      var newUser = {username: element.username, password: element.password,status:element.type};
+      var newUser = {username: element.username, password: element.password,status:element.type,id:element.customers_id};
       Users.push(newUser);
    });
 })
@@ -22,6 +22,11 @@ router.get('/', function(req, res, next) {
       
       res.send(value);
    })
+  
+});
+
+router.get('/profile', function(req, res, next) {
+  return res.status(200).json(req.session.user.id)
   
 });
 
@@ -49,7 +54,9 @@ router.post('/signup', function(req, res){
          var newUser = {username: req.body.username, password: hash,type:"customer"};
          Users.push(newUser);
          db.login.create(newUser)
-           .then(user => res.json(user))
+           .then(user => {res.json(user)
+            console.log(user)
+         })
          req.session.user = newUser;
          req.session.save()
          console.log(Users)
@@ -89,7 +96,9 @@ router.post('/login', function(req, res){
          if(user.username === req.body.username){
             bcrypt.compare(req.body.password, user.password, function (err, result) {
                req.session.user = user;
+               req.session.id = user.id;
                req.session.save()
+               console.log(req.session)
                res.status(200)
                res.sendFile(path.join(__dirname, 'src/customer/index.html'));   
             })
