@@ -9,7 +9,7 @@ const db = require('../api/index')
 db.login.findAll().then( value => {
 
    value.forEach(element => {
-      var newUser = {username: element.username, password: element.password,status:"customer"};
+      var newUser = {username: element.username, password: element.password,status:element.type};
       Users.push(newUser);
    });
 })
