@@ -15,6 +15,7 @@ const requestlist = require('./api/controllers/requestlist.controller');
 const loan = require('./api/controllers/loan.controller');
 const loanlist = require('./api/controllers/loanlist.controller');
 const calendar_debt = require('./api/controllers/calendar_debt.controller');
+const calendar_crm = require('./api/controllers/calendar_crm.controller');
 const requestlist_has_customers = require('./api/controllers/requestlist_has_customers.controller');
 const asset = require('./api/controllers/asset.controller');
 const customerList = require('./api/controllers/customers_list.controller')
@@ -60,11 +61,7 @@ app.post('/api/moneystock', moneystock.create);
 app.get('/api/moneystock/:Id', moneystock.findById);
 app.put('/api/moneystock/:Id', moneystock.update);
 
-//Find All
-app.get('/api/customerlist', customerlist.findAll);
-app.post('/api/customerlist', customerlist.create);
-app.get('/api/customerlist/:Id', customerlist.findById);
-app.put('/api/customerlist/:Id', customerlist.update);
+
 
 
 //test moneystock
@@ -113,6 +110,9 @@ app.post('/api/asset/' , asset.create);
 
 app.get('/api/customerList/' ,customerList.findAll)
 app.post('/api/customerList/' , customerList.create)
+
+app.get('/api/calendar_crm' , calendar_crm.findAll)
+
 
 //Server
 const port = 8080

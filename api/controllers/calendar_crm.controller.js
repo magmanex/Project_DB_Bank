@@ -6,7 +6,7 @@ exports.findAll = (req, res) => {var List =[];
         var custom = 0
         stock.forEach(element => {
             var currentdate = new Date();
-            var DateDiff = currentdate - element.meetingDate;
+            var DateDiff = currentdate - element.meetingdate;
             var mvalue = new Date(DateDiff);
             if( mvalue.getDate() >= 1 ){
                 console.log(element.id)
@@ -22,10 +22,9 @@ exports.findAll = (req, res) => {var List =[];
                                 console.log("test tmp : " + tmp.id)
 
                                 List.push({
-                                    id:tmp.id,
-                                    firstname:tmp.firstname,
-                                    time:element.meetingDate,
-                                    phone:tmp.phone
+                                   
+                                    meetingdate:element.meetingdate,
+                                    
                                 });
                                 console.log("Test push " + List.length)
                                 // res.json(List)
