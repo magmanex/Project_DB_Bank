@@ -75,3 +75,14 @@ exports.getLast = (req ,res) => {
         })
       }); 
 }
+
+exports.check = (req, res) => {
+    db.moneyStock.findAll({
+        limit: 1,
+        order: [ [ 'id', 'DESC' ]]
+      }).then(function (entries) {
+        res.status(200).json({
+            stock:parseFloat(entries[0].total)
+        })
+      });
+}

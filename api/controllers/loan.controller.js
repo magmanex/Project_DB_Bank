@@ -13,8 +13,9 @@ exports.create = (req, res) => {
         amount: req.body.amount,
         interestrate : req.body.interestrate,
         totalamount :req.body.totalamount,
-        time : req.body.time
-         
+        time : req.body.time,
+        approval_date: req.body.approval_date,
+        officer_id:req.body.officer_id
         })
         .then(data => {		
             res.json(data);
