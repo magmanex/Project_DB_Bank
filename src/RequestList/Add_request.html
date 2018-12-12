@@ -372,7 +372,7 @@
                     save_list = function() {
                        return new Promise(resolve =>{
                            List.forEach(function ( element) {
-                                $.post("../api/loanlist/" ,{
+                                $.post("../api/asset/" ,{
                                     id:null,
                                     name:element.asset_name,
                                     cost:element.asset_value,
@@ -401,7 +401,7 @@
                    }
 
                    await update_request();
-                //    await save_list();
+                   await save_list();
                })
             });
 
