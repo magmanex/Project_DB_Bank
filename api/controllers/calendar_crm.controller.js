@@ -1,7 +1,45 @@
 const db = require('../index')
 
-exports.findAll = (req, res) => {
-    db.calendar_crm.findAll({include: [ { model: db.typeStock, as: 'type' }] } ).then(stock => res.json(stock))
+exports.findAll = (req, res) => {var List =[];
+    db.requestlist.findAll()
+    .then(async stock => {
+        var custom = 0
+        stock.forEach(element => {
+            var currentdate = new Date();
+            var DateDiff = currentdate - element.meetingDate;
+            var mvalue = new Date(DateDiff);
+            if( mvalue.getDate() >= 1 ){
+                console.log(element.id)
+                db.requestlist_has_customers.findAll({where: {requestlist_id :element.id}})
+                    .then(e =>
+                    {
+                        console.log("test e : " + e.length)
+                        custom += e.length
+                        e.forEach(o => {
+                            console.log("test o : " + o.customers_id)
+                            db.customers.findById(o.customers_id).then(tmp =>
+                            {
+                                console.log("test tmp : " + tmp.id)
+
+                                List.push({
+                                    id:tmp.id,
+                                    firstname:tmp.firstname,
+                                    time:element.meetingDate,
+                                    phone:tmp.phone
+                                });
+                                console.log("Test push " + List.length)
+                                // res.json(List)
+                                if (List.length === custom) {
+                                    res.json(List)
+                                }
+                            });
+                        })
+                    }       
+                )
+            }
+        })
+
+    }).then()
 }
 
 
