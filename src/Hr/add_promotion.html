@@ -110,6 +110,7 @@
         <script src="../js/scrolling-nav.js"></script>		
         
         <script>
+
         $( "#b" ).hide();
             (function ($) {
                 $.fn.serializeFormJSON = function () {
@@ -151,13 +152,13 @@
             $( "#rate" ).val(data[0].rate);
             $( "#duration" ).val(data[0].duration);
   
-                });
+            });
 
        
       
     }
             $("#header").load("../header.html");
-            
+    
             $("#a").click(function(){
                 $.post( "../../api/promotion", $("form").serializeFormJSON() );
          
@@ -176,5 +177,6 @@
                             });
                 
                 console.log($("form").serializeFormJSON())
-                window.location = "../promotion.html";   });
+                window.location = "../promotion.html";
+        });
         </script>

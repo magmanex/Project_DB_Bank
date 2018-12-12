@@ -1,8 +1,7 @@
 const db = require('../index')
 
 exports.findAll = (req, res) => {
-	db.promotion
-	.findAll().then(stock => res.json(stock))
+	db.promotion.findAll().then(stock => res.json(stock))
 }
 
 

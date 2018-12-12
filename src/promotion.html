@@ -62,7 +62,7 @@
 					
 					</div>
 				</div>
-				<a href="#" class="btn btn-info btn-lg">
+				<a href="./Hr/add_promotion.html" class="btn btn-info btn-lg">
 					<span class="glyphicon glyphicon-plus-sign"></span> ADD
 				  </a>
 			</div>
@@ -148,16 +148,20 @@
 </html>
 
 <script>
+	//Global variable
+	var id = 0;
 	$("#header").load("header.html");
+
 	$.getJSON( "../api/promotion", function( data ){
 	var items = "";
                  
                 $.each( data, function( key, val ) {
-                    items+= "<div class=col-md-4 col-sm-6><figure><img src=img/portfolio/"+val.id+".jpg alt=img0"+val.id+"><figcaption><h3>"+val.name+"</h3>"+"<span>"+val.detail+"</span>"+"<a href=portfolio-item"+val.id+".html>More</a>"+"</figcaption></figure></div>" ;
+                    items+= "<div class=col-md-4 col-sm-6><figure><img src=img/portfolio/"+val.id+".jpg alt=img0"+val.id+"><figcaption><h3>"+val.name+"</h3>"+"<span> รายละเอียดเพิ่มเติม </span>"+"<a href=portfolio-item.html?id="+val.id+">Click</a>"+"</figcaption></figure></div>" ;
                 });
                 
                 $( items ).appendTo( "#promolist" );
            
   
-                });
+				});
+	
 </script>
