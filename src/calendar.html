@@ -85,16 +85,11 @@
                         
                         <table id="list">
                             <tr>
-                                <th><center>
-                                    <label>
-                                        <input type="checkbox" id="checkAll"><span class="text"></span>
-                                    </label> All
-                                    </center>
-                                </th>
-                                <th><center>Document No.</center></th>
-                                <th><center>Date</center></th>
-                                <th><center>Time</center></th>
+                               
+                                <th><center>Loan No.</center></th>
                                 <th><center>ชื่อลูกค้า</center></th>
+                                <th><center>วันกำหนดจ่าย</center></th>
+                                <th><center>เบอร์โทรติดต่อลูกค้า</center></th>
                             </tr>
                            
                           </table>					
@@ -117,17 +112,20 @@
         
         <script>
             $("#header").load("../header.html");
-            $.getJSON( "../api/calendar_debt", function( data ) {
+            $.getJSON( "../api/calendar_debt", function( val ) {
                 var items = "";
                  
                 $.each( data, function( key, val ) {
+
+                    console.log(val)
                     items+= `<tr><td><a href="../Loan/Add_loan.html?id=`+val.id+`"><center>`+val.id+`</center></a></td>
-                        <td><center>`+ val.time+`</center></td> 
-                        <td><center>`+ val.time +`</center></td>
-                        <td><center>`+ val.firstName+`</center></td>
-                    
+                        <td><center>`+ val.firstname+`</center></td> 
+                        <td><center>`+ val.time+`</center></td>
+                        <td><center>`+ val.phone+`</center></td>
+
                         </tr>`;
-                });
+                    });
+
                 
                 $( items ).appendTo( "#list" );
            

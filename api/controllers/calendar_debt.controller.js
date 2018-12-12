@@ -1,27 +1,43 @@
 const db = require('../index')
 
-exports.findAll = (req, res) => {
+exports.findAll = async (req, res) => {
     var List =[];
     db.loan.findAll()
-    .then(stock => {
+    .then(async stock => {
+        await   stock.forEach(element => {
         var currentdate = new Date();
-        var MonthDiff = currentdate - stock[0].time;
-        var value = new Date(MonthDiff);
-	if( value.getMonth() > 0 ){
-    db.customersList.findAll({where: {loan_id : stock[0].id}})
-        .then(customer =>
-        {
-            db.customers.findById(customer[0].id).then(tmp =>
+        var MonthDiff = currentdate - element.time;
+        var mvalue = new Date(MonthDiff);
+        if( mvalue.getMonth() > 0 ){
+            console.log(element.id)
+            db.customersList.findAll({where: {loan_id :element.id}})
+                .then(e =>
                 {
-                    List.push(tmp.firstname)
-                    res.json(List);
-                })
-        }       
-         )
+                    console.log("test e : " + e.length)
+                    e.forEach(o => {
+                    console.log("test o : " + o.customers_id)
+                        db.customers.findById(o.customers_id).then(tmp =>
+                            {
+                                console.log("test tmp : " + tmp.id)
+
+                                List.push({
+                                    id:tmp.id,
+                                    firstname:tmp.firstname,
+                                    time:tmp.time,
+                                    phone:tmp.phone
+                                });
+                                console.log("Test push " + List.length)
+                                // res.json(List)
+                            });
+                    })
+                }       
+            )
   
-	}
-} 
-)
+        }
+    })
+
+    res.json(List)
+}).then()
 }
 
 
