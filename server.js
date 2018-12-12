@@ -72,6 +72,7 @@ app.post('/api/loanlist/' , loanlist.create)
 app.get('/api/calendar_debt' , calendar_debt.findAll)
 
 app.get('/api/asset/' , asset.findAll);
+app.get('/api/asset/:Id' , asset.findById);
 app.post('/api/asset/' , asset.create);
 
 //Server

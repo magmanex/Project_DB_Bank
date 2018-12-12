@@ -112,7 +112,7 @@
                 </div>
                 <br>
                 <br>
-                <div class="form-group has-feedback">
+                <div class="form-group has-feedback" id="supply">
                         <label class="col-lg-3 control-label">สินทรัพย์ค้ำประกัน</label>
                         <div class="col-lg-3">
                             <input type="text" class="form-control" id="money1" value="" >
@@ -124,7 +124,7 @@
                 </div>
                 <br>
                 <br>
-                <div align="right">
+                <div align="right" id="list">
                     <button type="button" class="btn btn-default" data-dismiss="modal" id="add_list">เพิ่มรายการ</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal" id="remove_list">ยกเลิกรายการ</button>
                 </div>  
@@ -132,18 +132,26 @@
 				<div class="col-sm-12">
                     <hr>
                         <table id = "new_table">
+                            <tr>
+                                <th><center>
+                                    <label>
+                                        <input type="checkbox" id="checkAll"><span class="text"></span>
+                                    </label> All
+                                </center></th>
+                                <th><center>ลำดับ</center></th>
+                                <th><center>ทรัพย์สินค้ำ</center></th>
+                                <th><center>มูลค่า(บาท)</center></th>
+                            </tr>
+                            <tbody id = new_data></tbody>
+                        </table>
+                        <table id = "old_table">
                                 <tr>
-                                  <th><center>
-                                        <label>
-                                            <input type="checkbox" id="checkAll"><span class="text"></span>
-                                        </label> All
-                                    </center></th>
-                                  <th><center>ลำดับ</center></th>
-                                  <th><center>ทรัพย์สินค้ำ</center></th>
-                                  <th><center>มูลค่า(บาท)</center></th>
+                                    <th><center>ลำดับ</center></th>
+                                    <th><center>ทรัพย์สินค้ำ</center></th>
+                                    <th><center>มูลค่า(บาท)</center></th>
                                 </tr>
                                 <tbody id = new_data></tbody>
-                              </table>	
+                            </table>
                         <hr>
 
                         <div class="form-group has-feedback col-lg-12" > 
@@ -195,6 +203,7 @@
             var id = 0;
             var old_amount = 0;
             var List = [];
+            var rate = 0;
             $("#header").load("../header.html");
 
             function print_table() {
@@ -226,7 +235,6 @@
             }
 
             function calculate_total(_value){
-                var rate = $("#promotion_rate").val();
                 var interest = parseFloat(_value)*(rate/100);
                 var total = _value+interest;
                 $("#total").val(total);
@@ -245,24 +253,32 @@
                         $("#id").val(data.id);
                         $("#date").val(data.date)
                         $("#promotion_id").val(data.promotion_id);
+                        request_promotion(data.promotion_id)
                         if(data.listapprove == "S") {
+                            $("#old_table").hide();
                             var item = ""
                             item = `
                                     <button type="button" class="btn btn-default" data-dismiss="modal" id="update_btn">Update</button>
                                     <a href="../RequestList/request_listview.html" class="btn">ย้อนกลับ</a>`;
                             $("#footage_btn").append(item)
                         } else if(data.listapprove == "W") {
-                        var item = ""
-                        item = `<a href="#" id="approve_btn" class="btn">Approve</a>
-                                <a href="#" id="disapprove_btn" class="btn">Aisapprove</a>
-                                <a href="../RequestList/request_listview.html" class="btn">ย้อนกลับ</a>`;
-                            $("#footage_btn").append(item)
+                            request_asset(data.id);
+                            $("#list").hide();
+                            $("#new_table").hide();
+                            $("#supply").hide();
+                            var item = ""
+                            item = `
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" id="approve_btn">Approve</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" id="disapprove_btn">Disapprove</button>
+                                    <a href="../RequestList/request_listview.html" class="btn">ย้อนกลับ</a>`;
+                                $("#footage_btn").append(item)
                         } else {
-                            alert("ระบบผิดพลาด")
-                            return location.reload();
+                            var item = ""
+                            item = `
+                                    <a href="../RequestList/request_listview.html" class="btn">ย้อนกลับ</a>`;
+                            $("#footage_btn").append(item)
                         }
                         getCustomerName(data.customers_id)
-                        request_promotion(data.promotion_id)
                     });
                 } else {
                     $("#old_data").hide();
@@ -296,7 +312,24 @@
             function request_promotion(id) {
                 $.getJSON("../api/promotion/" + id , function(data) {
                         $("#promotion_rate").val(data.rate);
+                        rate = data.rate;
                         $("#promotion_duration").val(data.duration);
+                });
+            }
+
+            function request_asset(id) {
+                $.getJSON("../api/asset/" + id , function(data) {
+                    var total = 0;
+                    var tmp = "";
+                    data.forEach(function(element , i ) {
+                        total += parseFloat(element.cost);
+                        tmp += `<tr><td><center>`+ parseInt(i+1)+`</center></td>
+                            <td><center>`+ element.name +`</center></td>
+                            <td><center>`+ element.cost+`</center></td>`;
+                    })
+                    $("#id").val(id);
+                    $("#old_table").append(tmp);
+                    calculate_total(total);
                 });
             }
 
@@ -402,7 +435,39 @@
 
                    await update_request();
                    await save_list();
-               })
+               });
+
+               $("#approve_btn").click(async function(){
+                    update_request = function () {
+                       return new Promise(resolve => {
+                           $.post("../api/requestUpdate/" + $("#id").val(), {
+                               id: parseInt($("#id").val()),
+                               listapprove:"Y"
+                           },function(status){
+                               alert(status)
+                           })
+                           resolve();
+                       })
+                   }
+
+                   await update_request();
+               });
+
+               $("#disapprove_btn").click(async function(){
+                    update_request = function () {
+                       return new Promise(resolve => {
+                           $.post("../api/requestUpdate/" + $("#id").val(), {
+                               id: parseInt($("#id").val()),
+                               listapprove:"N"
+                           },function(status){
+                               alert(status)
+                           })
+                           resolve();
+                       })
+                   }
+
+                   await update_request();
+               });
             });
 
 
