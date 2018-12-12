@@ -5,14 +5,13 @@ const db = require('../index')
 exports.create = (req, res) => {
     //Id is auto increment
     db.customersList.create({  
-            amount: req.body.amount,
-            total: req.body.total,
-            typeStock_id : req.body.typeStock_id
-        })
-        .then(data => {		
-            res.json(data);
-        })
-        .catch(error => res.status(400).send(error))
+        customers_id: req.body.customers_id,
+        loan_id: req.body.loan_id
+    })
+    .then(data => {		
+        res.json(data);
+    })
+    .catch(error => res.status(400).send(error))
 }
 
 //Find by Id

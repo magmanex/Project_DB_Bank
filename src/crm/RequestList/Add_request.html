@@ -91,6 +91,13 @@
                 <br>
                 <div id="customer" class="form-group has-feedback"></div>
                 <hr>
+                <div id="AddCustomer" class="form-group has-feedback">
+                    <label class="col-lg-3 control-label">CustomerID</label>
+                    <div class="col-lg-3">
+                            <input type="text" class="form-control" id="customer_id" value="">
+                        </div>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="add_customer">เพิ่มผู้กู้</button>
+                </div>
                 <br>
                 <div id="promotion" class="form-group has-feedback">
                     <label class="col-lg-3 control-label">Promotion ID</label>
@@ -204,6 +211,7 @@
             var old_amount = 0;
             var List = [];
             var rate = 0;
+            var CustomerList = [];
             $("#header").load("../header.html");
 
             function print_table() {
@@ -228,7 +236,6 @@
                 if(List[_id] == null) {
                     return;
                 } else {
-                    console.log(_id)
                     List[_id].loanleft += parseFloat(_amount);
                     check_value(++_id,_amount);
                 }
@@ -253,6 +260,7 @@
                         $("#id").val(data.id);
                         $("#date").val(data.date)
                         $("#promotion_id").val(data.promotion_id);
+                        request_customer(data.id);
                         request_promotion(data.promotion_id)
                         if(data.listapprove == "S") {
                             $("#old_table").hide();
@@ -266,6 +274,7 @@
                             $("#list").hide();
                             $("#new_table").hide();
                             $("#supply").hide();
+                            $("#AddCustomer").hide();
                             var item = ""
                             item = `
                                     <button type="button" class="btn btn-default" data-dismiss="modal" id="approve_btn">Approve</button>
@@ -278,7 +287,6 @@
                                     <a href="../RequestList/request_listview.html" class="btn">ย้อนกลับ</a>`;
                             $("#footage_btn").append(item)
                         }
-                        getCustomerName(data.customers_id)
                     });
                 } else {
                     $("#old_data").hide();
@@ -294,19 +302,32 @@
 
             function getCustomerName(id) {
                 $.getJSON("../../api/customer/" + id , function(data) {
-                           var item = "";
-                           item = `
+                    CustomerList.push({
+                        id:id,
+                        firstname:data.firstname,
+                        surname:data.surname
+                    });
+                    printCustomer();
+                });
+            }
+
+            function printCustomer(){
+                console.log(CustomerList)
+                var item = "";
+                CustomerList.forEach(element =>{
+                           item += `
                             <label class="col-lg-3 control-label">ชื่อลูกค้า</label>
                             <div class="col-lg-3">
-                                <input type="text" class="form-control" id="fname" value="`+data.firstname+`" readonly>
+                                <input type="text" class="form-control" id="fname" value="`+element.firstname+`" readonly>
                             </div>
                             <label class="col-lg-3 control-label">นามสกุล</label>
                             <div class="col-lg-3">
-                                <input type="text" class="form-control" id="lname" value="`+data.surname+`" readonly>
+                                <input type="text" class="form-control" id="lname" value="`+element.surname+`" readonly>
                             </div>
                         `;
-                        $("#customer").append(item);
-                });
+                })
+                $("#customer").empty();
+                $("#customer").append(item);
             }
 
             function request_promotion(id) {
@@ -314,6 +335,14 @@
                         $("#promotion_rate").val(data.rate);
                         rate = data.rate;
                         $("#promotion_duration").val(data.duration);
+                });
+            }
+
+            function request_customer(id) {
+                $.getJSON("../../api/requestlist_has_customers/" + id , function(data) {
+                    data.forEach(element => {
+                        getCustomerName(element.customers_id);
+                    })
                 });
             }
 
@@ -359,6 +388,11 @@
                        $("#money2").val("");
                });
 
+               $("#add_customer").click(function() {
+                   var id = $("#customer_id").val();
+                   getCustomerName(id);
+               })
+
                //for remove list
                 $("#remove_list").click(async function () {
                     var id = $("#new_data input:checked").map(function () {
@@ -401,7 +435,6 @@
 
             $(window).load(function() {
                 $("#update_btn").click(async function () {
-                   console.log("test")
                     save_list = function() {
                        return new Promise(resolve =>{
                            List.forEach(function ( element) {
@@ -419,7 +452,20 @@
                        })
                    }
 
-
+                   create_user_list = function(){
+                       if(CustomerList.length > 1) {
+                           CustomerList.shift();
+                           CustomerList.forEach(element => {
+                            return new Promise(resolve => {
+                                $.post("../../api/requestlist_has_customers" , {
+                                    requestlist_id:parseInt($("#id").val()),
+                                    customers_id:element.id
+                                })
+                                resolve();
+                            });
+                           });
+                       }
+                   }
 
                    update_request = function () {
                        return new Promise(resolve => {
@@ -433,7 +479,7 @@
                            resolve();
                        })
                    }
-
+                   await create_user_list();
                    await update_request();
                    await save_list();
                });
@@ -473,6 +519,7 @@
                            approval_date:currentdate,
                            officer_id:officer_id
                        },function(data){
+                            create_user_list(data.id);
                             create_loanlist(amount,currentdate,data.id)
                        })
                    }
@@ -506,6 +553,17 @@
                                }
                            })
                            resolve();
+                       })
+                   }
+
+                   create_user_list = function (id) {
+                       return new Promise(resolve => {
+                           CustomerList.forEach(element => {
+                                $.post("../api/customerList/" , {
+                                    customers_id:element.id,
+                                    loan_id:id
+                                })
+                           })
                        })
                    }
 

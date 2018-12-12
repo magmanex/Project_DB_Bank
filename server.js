@@ -17,6 +17,7 @@ const loanlist = require('./api/controllers/loanlist.controller');
 const calendar_debt = require('./api/controllers/calendar_debt.controller');
 const requestlist_has_customers = require('./api/controllers/requestlist_has_customers.controller');
 const asset = require('./api/controllers/asset.controller');
+const customerList = require('./api/controllers/customers_list.controller')
 
 const app = express()
 
@@ -109,6 +110,9 @@ app.post('/api/requestlist_has_customers' , requestlist_has_customers.create)
 app.get('/api/asset/' , asset.findAll);
 app.get('/api/asset/:Id' , asset.findById);
 app.post('/api/asset/' , asset.create);
+
+app.get('/api/customerList/' ,customerList.findAll)
+app.post('/api/customerList/' , customerList.create)
 
 //Server
 const port = 8080
