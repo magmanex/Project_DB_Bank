@@ -34,8 +34,15 @@ app.get('/',function(req,res){
         res.sendFile(path.join(__dirname+'/src/login.html'));
 }
     else{
-        app.use(express.static(path.join(__dirname, 'src/customer')));
-        res.sendFile(path.join(__dirname, 'src/customer/index.html'));   
+        if(req.session.user.status == "customer"){
+            app.use(express.static(path.join(__dirname, 'src/customer')));
+            res.sendFile(path.join(__dirname, 'src/customer/index.html'));   
+        }
+        else{
+            app.use(express.static(path.join(__dirname, 'src/crm')));
+            res.sendFile(path.join(__dirname, 'src/crm/index.html'));   
+        }
+      
     }
     
 });

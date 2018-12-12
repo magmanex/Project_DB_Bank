@@ -134,6 +134,15 @@ crossorigin="anonymous"></script>
   </div>
 </body>
 <script>
+  if(localStorage.getItem("loop")=="true"){
+    localStorage.setItem("loop", "false");
+    location.reload()
+  }
+  
+
+// Retrieve
+localStorage.getItem("lastname");
+
   $('.message a').click(function(){
     $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
  });
@@ -141,19 +150,24 @@ crossorigin="anonymous"></script>
   var username = $('#username').val(); 
   var pwd = $('#password').val(); 
   var em = $('#email').val(); 
- $.post( "/users/signup", {"username":username,"password":pwd,"email":em} ).done(function( data ) {
-   alert("Signup successful")
+ $.post( "/users/signup", {"username":username,"password":pwd,"email":em} ).always(function( data ) {
+  location.reload();}).done(function( data ) {
+    location.reload();
   });
- 
+  location.reload();
+  localStorage.setItem("loop", "true");
 });
 
  $('.login-form button').click(function(){
   var username = $('#rusername').val(); 
   var pwd = $('#rpassword').val(); 
   var em = $('#remail').val(); 
- $.post( "/users/login", {"username":username,"password":pwd,"email":em} ).done(function( data ) {
-    window.location.href = "/"});
- 
+ $.post( "/users/login", {"username":username,"password":pwd,"email":em} ).always(function( data ) {
+  location.reload();}).done(function( data ) {
+    
+    location.reload();});
+    location.reload();
+    localStorage.setItem("loop", "true");
 });
  </script>
 </html>
