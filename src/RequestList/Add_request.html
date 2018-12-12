@@ -84,17 +84,40 @@
                         </div>
                         <label class="col-lg-3 control-label">วันที่</label>
                         <div class="col-lg-3">
-                            <input type="text" class="form-control" id="date_po" value="17/9/2018" readonly>
+                            <input type="text" class="form-control" id="date" value="17/9/2018" readonly>
                         </div>
                 </div>
                 <hr>
                 <br>
+                <div id="customer" class="form-group has-feedback"></div>
+                <hr>
+                <br>
+                <div id="promotion" class="form-group has-feedback">
+                    <label class="col-lg-3 control-label">Promotion ID</label>
+                    <div class="col-lg-3">
+                        <input type="text" class="form-control" id="promotion_id" value="" readonly>
+                    </div>
+                    <label class="col-lg-3 control-label">rate</label>
+                    <div class="col-lg-3">
+                        <input type="text" class="form-control" id="promotion_rate" value="" readonly>
+                    </div>
+                </div>
+                <br>
+                <br>
                 <div class="form-group has-feedback">
-                        <label class="col-lg-3 control-label">จำนวนเงิน</label>
+                    <label class="col-lg-3 control-label">Duration</label>
+                    <div class="col-lg-3">
+                        <input type="text" class="form-control" id="promotion_duration" value="" readonly>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <div class="form-group has-feedback">
+                        <label class="col-lg-3 control-label">สินทรัพย์ค้ำประกัน</label>
                         <div class="col-lg-3">
                             <input type="text" class="form-control" id="money1" value="" >
                         </div>
-                        <label class="col-lg-3 control-label">ยืนยันจำนวนเงิน</label>
+                        <label class="col-lg-3 control-label">มูลค่าทรัพย์สิน</label>
                         <div class="col-lg-3">
                             <input type="text" class="form-control" id="money2" value="" >
                         </div>
@@ -102,9 +125,9 @@
                 <br>
                 <br>
                 <div align="right">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" id="add_list">เพิ่มรายการ</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal" id="remove_list">ยกเลิกรายการ</button>
-                </div>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="add_list">เพิ่มรายการ</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="remove_list">ยกเลิกรายการ</button>
+                </div>  
 				<div class="row">                    
 				<div class="col-sm-12">
                     <hr>
@@ -116,25 +139,20 @@
                                         </label> All
                                     </center></th>
                                   <th><center>ลำดับ</center></th>
-                                  <th><center>จำนวนเงิน</center></th>
-                                  <th><center>สร้างโดย</center></th>
+                                  <th><center>ทรัพย์สินค้ำ</center></th>
+                                  <th><center>มูลค่า</center></th>
                                 </tr>
                                 <tbody id = new_data></tbody>
                               </table>	
                         <hr>
-                        <table id = "old_data">
-                            <tr>
-                              <th><center>
-                                    <label>
-                                        <input type="checkbox" id="checkAll"><span class="text"></span>
-                                    </label> All
-                                </center></th>
-                              <th><center>ลำดับ</center></th>
-                              <th><center>จำนวนเงิน</center></th>
-                              <th><center>สร้างโดย</center></th>
-                            </tr>
-                          </table>	
-                          <hr>	
+
+                        <div class="form-group has-feedback col-lg-12" > 
+                            <label class="col-lg-9 control-label" align="right">มูลค่าทรัพย์สินรวม</label>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control" id="total" value="" >
+                            </div>
+                        </div>  
+                        <br>
                           <div class="form-group has-feedback">
                                 <label class="col-lg-3 control-label">พยาน</label>
                                 <div class="col-lg-3">
@@ -144,15 +162,14 @@
                                 <div class="col-lg-3">
                                     <input type="text" class="form-control" id="date_po" value="" >
                                 </div>
-                            </div>	
+                            </div>
+
                             <br>
                             <br>
                             <hr>	
                     </div>
-                    <div align="right">
+                    <div align="right" id="footage_btn">
                             <hr>
-                                <a href="#" id="save_btn" class="btn">บันทึก</a>
-                                <a href="../Loan/List_loan.html" class="btn">ย้อนกลับ</a>
                     </div>
                     
 				</div>
@@ -182,18 +199,20 @@
 
             function print_table() {
                 var tmp="";
+                var total = 0;
                 List.forEach(function (element, i) {
+                    total += parseInt(element.asset_value);
                     tmp += `
                                 <tr>
                                 <td><center><label><input type="checkbox" value="`+ i + `"><span class="text"></span></label></center></th>
                                 <td><center>`+ (i + 1) + `</center></td>
-                                <td><center>`+ element.amount +`</center></td>
-                                <td><center>`+ element.DATE +`</center></td>
-                                <td><center>`+ element.loanleft+`</center></td>
+                                <td><center>`+ element.asset_name +`</center></td>
+                                <td><center>`+ element.asset_value +`</center></td>
                                 </tr>`;
                 });
                 $("#new_data").empty();
                 $("#new_data").append(tmp);
+                $("#total").val(total);
             }
 
             async function check_value(_id,_amount){
@@ -210,16 +229,32 @@
                 var url = new URL(link);
                 id = parseInt(url.searchParams.get("id"));
                 if(id !== null){
-                    $.getJSON("../api/loanlist/" + id , function(data) {
-                        var tmp = "";
-                        data.forEach(function(element , i ) {
-                            tmp += `<tr><td><center>`+ parseInt(i+1)+`</center></td>
-                                <td><center>`+ element.amount +`</center></td>
-                                <td><center>`+ element.DATE +`</center></td>
-                                <td><center>`+ element.loanleft+`</center></td>`;
-                        })
-                        $("#id").val(id);
-                        $("#old_data").append(tmp);
+                    $.getJSON("../api/requestlist/" + id , function(data) {
+                        console.log(data)
+                        var currentdate = new Date(data.date);
+                        var datetime =   currentdate.getFullYear() + "-"
+                                    + currentdate.getMonth()  + "-" 
+                                    + currentdate.getDate();
+                        $("#id").val(data.id);
+                        $("#date").val(data.date)
+                        $("#promotion_id").val(data.promotion_id);
+                        if(data.listapprove == "S") {
+                            var item = ""
+                            item = `<a href="#" id="update_btn" class="btn">Update</a>
+                                    <a href="../RequestList/request_listview.html" class="btn">ย้อนกลับ</a>`;
+                            $("#footage_btn").append(item)
+                        } else if(data.listapprove == "W") {
+                        var item = ""
+                        item = `<a href="#" id="approve_btn" class="btn">Approve</a>
+                                <a href="#" id="disapprove_btn" class="btn">Aisapprove</a>
+                                <a href="../RequestList/request_listview.html" class="btn">ย้อนกลับ</a>`;
+                            $("#footage_btn").append(item)
+                        } else {
+                            alert("ระบบผิดพลาด")
+                            return location.reload();
+                        }
+                        getCustomerName(data.customers_id)
+                        request_promotion(data.promotion_id)
                     });
                 } else {
                     $("#old_data").hide();
@@ -230,6 +265,30 @@
             function load_old_amount() {
                 $.getJSON("../api/loan/" + id , function(data) {
                            old_amount = parseInt(data.amount);
+                });
+            }
+
+            function getCustomerName(id) {
+                $.getJSON("../api/customer/" + id , function(data) {
+                           var item = "";
+                           item = `
+                            <label class="col-lg-3 control-label">ชื่อลูกค้า</label>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control" id="fname" value="`+data.firstname+`" readonly>
+                            </div>
+                            <label class="col-lg-3 control-label">นามสกุล</label>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control" id="lname" value="`+data.surname+`" readonly>
+                            </div>
+                        `;
+                        $("#customer").append(item);
+                });
+            }
+
+            function request_promotion(id) {
+                $.getJSON("../api/promotion/" + id , function(data) {
+                        $("#promotion_rate").val(data.rate);
+                        $("#promotion_duration").val(data.duration);
                 });
             }
 
@@ -249,23 +308,28 @@
                                     // + currentdate.getHours() + ":"  
                                     // + currentdate.getMinutes() + ":" 
                                     // + currentdate.getSeconds();
-                   if(money1 == money2) {
-                       if(parseFloat(money1) > old_amount) {
-                           alert("กรอกเงินเกินจำนวน กรุณาตรวจสอบใหม่");
-                           return;
-                       }
-                       old_amount -= parseFloat(money1);
-                       //Add data to list
-                       List.push({
-                            amount: parseFloat(money1),
-                            DATE: datetime,
-                            loanleft: parseFloat(old_amount),
-                            load_id:id
-                       });
+                        List.push({
+                            asset_name: money1,
+                            asset_value: parseFloat(money2),
+                            req_id:id
+                        });
                        print_table();
-                   } else {
-                       alert("กรุณากรอกเงินให้ตรงกัน")
-                   }
+                //    if(money1 == money2) {
+                //        if(parseFloat(money1) > old_amount) {
+                //            alert("กรอกเงินเกินจำนวน กรุณาตรวจสอบใหม่");
+                //            return;
+                //        }
+                //        old_amount -= parseFloat(money1);
+                //        //Add data to list
+                //        List.push({
+                //             asset_name: money1,
+                //             asset_value: parseFloat(money2),
+                //             req_id:id
+                //        });
+                //        print_table();
+                //    } else {
+                //        alert("กรุณากรอกเงินให้ตรงกัน")
+                //    }
                });
 
                //for remove list

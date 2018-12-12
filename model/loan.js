@@ -1,3 +1,5 @@
+var Sequelize = require('sequelize');
+
 module.exports = (sequelize, type) => {
     return sequelize.define('loan', {
         id: {
