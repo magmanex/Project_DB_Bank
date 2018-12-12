@@ -8,7 +8,8 @@ module.exports = (sequelize, type) => {
         },
         amount: type.FLOAT,
         date: type.DATE,
-        listapprove : type.STRING
+        listapprove : type.STRING,
+        meetingdate : type.DATE
        
     },{
         tableName: 'requestlist',
