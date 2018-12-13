@@ -17,7 +17,7 @@ exports.create = (req, res) => {
 //Find by Id
 exports.findById = (req, res) => {
 
-    db.customersList.findById(req.params.Id)
+    db.customersList.findAll({ where: { loan_id: req.params.Id} })
     .then(stock => {
             if (!stock){
                 return res.status(404).json({message: "Stock Not Found"})
@@ -30,7 +30,7 @@ exports.findById = (req, res) => {
 
 exports.findAll = (req, res) => {
 console.log(req.body)
-    db.customersList.findAll({ where: { customers_id: req.body.customers_id} })
+    db.customersList.findAll({ where: { customers_id: req.params.customers_id} })
     .then(stock => {
             if (!stock){
                 return res.status(404).json({message: "Stock Not Found"})
