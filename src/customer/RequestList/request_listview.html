@@ -155,21 +155,29 @@
 <script>
     $("#header").load("../header.html");
     async function Onstart() {
+        var cus_id = 0
+        $.getJSON("../../users/profile",).done(function(val) {
+            cus_id = val      
+                        
+                        })
         var items = "";
         await $.getJSON( "../../api/requestlist", function( data ) {
             $.each( data, async function( key, val ) {
+                if(cus_id == val.customers_id){
+
+                
                 await $.getJSON("../../api/customer/" + val.customers_id , function(data2) {
                 items = `<tr><td><a href="../RequestList/Add_request.html?id=`+val.id+`"><center>`+val.id+`</center></a></td>
                 <td><center>`+ data2.firstname+`</center></td> 
-                <td><center>`+ val.asset +`</center></td>
+                <td><center>`+ (val.asset || "ยังไม่มี" ) +`</center></td>
                 <td><center>`+ val.date+`</center></td>
                 <td><center>`+ val.promotion_id +`</center></td>
-                <td><center>`+ val.status +`</center></td>
+                <td><center>`+ val.listapprove +`</center></td>
                 </tr>`;
                 console.log(items)
                 $( items ).appendTo( "#list" );
-
-                });
+                })
+                };
                 
             });
 
