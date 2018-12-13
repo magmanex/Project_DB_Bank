@@ -2,28 +2,58 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const path = require('path');
 const db = require('./api/index')
+var session = require('express-session');
+var cookieParser = require('cookie-parser');
 
 //api
+const customer = require('./api/controllers/customers.controller')
+const customerlist = require('./api/controllers/customers_list.controller')
 const moneystock = require('./api/controllers/moneystock.controller');
 const promotion = require('./api/controllers/promotion.controller');
 const officer = require('./api/controllers/officer.controller');
 const requestlist = require('./api/controllers/requestlist.controller');
 const loan = require('./api/controllers/loan.controller');
 const loanlist = require('./api/controllers/loanlist.controller');
+const calendar_debt = require('./api/controllers/calendar_debt.controller');
+const calendar_crm = require('./api/controllers/calendar_crm.controller');
+const requestlist_has_customers = require('./api/controllers/requestlist_has_customers.controller');
+const asset = require('./api/controllers/asset.controller');
+const customerList = require('./api/controllers/customers_list.controller')
 
 const app = express()
+
+var usersRouter = require('./routes/users');
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 
-app.use(express.static(path.join(__dirname, 'src')));
 
-app.use('/home',function(req,res){
-    res.sendFile(path.join(__dirname, 'index.html'));   
-   
+app.use(cookieParser());
+app.use(session({secret: "ILoveCPE"}));
+
+app.get('/',function(req,res){
+    console.log(req.session.user)
+    if(!req.session.user) { 
+        res.sendFile(path.join(__dirname+'/src/login.html'));
+}
+    else{
+        if(req.session.user.status == "customer"){
+            app.use(express.static(path.join(__dirname, 'src/customer')));
+            res.sendFile(path.join(__dirname, 'src/customer/index.html'));   
+        }
+        else{
+            app.use(express.static(path.join(__dirname, 'src/crm')));
+            res.sendFile(path.join(__dirname, 'src/crm/index.html'));   
+        }
+      
+    }
+    
 });
-
+app.use('/users', usersRouter);
 ///Rest API
+app.get('/api/customer' , customer.findAll);
+app.get('/api/customer/:Id' , customer.findById);
 
 //Find All
 app.get('/api/moneystock', moneystock.findAll);
@@ -31,8 +61,12 @@ app.post('/api/moneystock', moneystock.create);
 app.get('/api/moneystock/:Id', moneystock.findById);
 app.put('/api/moneystock/:Id', moneystock.update);
 
+
+
+
 //test moneystock
 app.post('/api/moneystockGetLast' , moneystock.getLast)
+app.get('/api/moneystockCheck/' , moneystock.check)
 
 app.get('/api/promotion', promotion.findAll);
 app.post('/api/promotion', promotion.create);
@@ -52,12 +86,8 @@ app.post('/api/requestlist', requestlist.create);
 app.get('/api/requestlist/:Id', requestlist.findById);
 app.put('/api/requestlist/:Id', requestlist.update);
 app.delete('/api/requestlist/:Id',requestlist.delete);
+app.post('/api/requestUpdate/:Id' , requestlist.update);
 
-app.get('/api/requestlist', requestlist.findAll);
-app.post('/api/requestlist', requestlist.create);
-app.get('/api/requestlist/:Id', requestlist.findById);
-app.put('/api/requestlist/:Id', requestlist.update);
-app.delete('/api/requestlist/:Id',requestlist.delete);
 
 app.get('/api/loan' , loan.findAll);
 app.post('/api/loan' , loan.create);
@@ -66,6 +96,23 @@ app.post('/api/loanUpdate/:Id' ,loan.update)
 
 app.get('/api/loanlist/:Id' , loanlist.findById)
 app.post('/api/loanlist/' , loanlist.create)
+
+//created by dai 
+app.get('/api/calendar_debt' , calendar_debt.findAll)
+
+app.get('/api/requestlist_has_customers' , requestlist_has_customers.findAll)
+app.get('/api/requestlist_has_customers/:Id' , requestlist_has_customers.findById)
+app.post('/api/requestlist_has_customers' , requestlist_has_customers.create)
+
+app.get('/api/asset/' , asset.findAll);
+app.get('/api/asset/:Id' , asset.findById);
+app.post('/api/asset/' , asset.create);
+
+app.get('/api/customerList/' ,customerList.findAll)
+app.post('/api/customerList/' , customerList.create)
+
+app.get('/api/calendar_crm' , calendar_crm.findAll)
+
 
 //Server
 const port = 8080

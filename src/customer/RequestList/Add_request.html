@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>BASICA! A Free Bootstrap3 HTML5 CSS3 Template by Vactual Art</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+	<link rel="stylesheet" href="../css/main.css">
+    <link href="../css/custom.css" rel="stylesheet">
+	
+	<script src="//use.edgefonts.net/bebas-neue.js"></script>
+
+    <!-- Custom Fonts & Icons -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,600,800' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="../css/icomoon-social.css">
+	<link rel="stylesheet" href="../css/font-awesome.min.css">
+    
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
+        
+        tr:nth-child(even){background-color: #f2f2f2}
+        
+        th {
+            background-color: #aec62c;
+            color: white;
+        }
+    </style>
+
+	<script src="../js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+	
+
+</head>
+
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+        
+    <div id="header"></div>
+
+        <!-- Page Title -->
+		<div class="section section-breadcrumbs">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<h1>ร้องขอการกู้เงิน</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+        <div class="section">
+	    	<div class="container">
+                <h2>ใบกู้เงิน</h2>
+                <hr>
+
+                <div class="form-group has-feedback">
+                        <label class="col-lg-3 control-label">Document No.</label>
+                        <div class="col-lg-3">
+                            <input type="text" class="form-control" id="id" value="" readonly>
+                        </div>
+                        <label class="col-lg-3 control-label">วันที่</label>
+                        <div class="col-lg-3">
+                            <input type="text" class="form-control" id="date" value="17/9/2018" readonly>
+                        </div>
+                </div>
+                <hr>
+                <br>
+                <div id="customer" class="form-group has-feedback"></div>
+                <hr>
+                <br>
+                <div id="promotion" class="form-group has-feedback">
+                    <label class="col-lg-3 control-label">Promotion ID</label>
+                    <div class="col-lg-3">
+                        <input type="text" class="form-control" id="promotion_id" value="" >
+                    </div>
+                </div>
+                <br>
+                <br>
+               
+                <br>
+                <br>
+            
+                <br>
+                <br>
+                <div align="right">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="add_list">เพิ่มรายการ</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="remove_list">ยกเลิกรายการ</button>
+                </div>  
+				<div class="row">                    
+				<div class="col-sm-12">
+                    <hr>
+                        <table id = "new_table">
+                                <tr>
+                                  <th><center>
+                                        <label>
+                                            <input type="checkbox" id="checkAll"><span class="text"></span>
+                                        </label> All
+                                    </center></th>
+                                  <th><center>ลำดับ</center></th>
+                                  <th><center>ทรัพย์สินค้ำ</center></th>
+                                  <th><center>มูลค่า(บาท)</center></th>
+                                </tr>
+                                <tbody id = new_data></tbody>
+                              </table>	
+                        <hr>
+
+                        <div class="form-group has-feedback col-lg-12" > 
+                            <label class="col-lg-9 control-label" align="right">มูลค่าทรัพย์สินรวม</label>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control" id="total" value="" >
+                            </div>
+                        </div>  
+                        <br>
+                          <div class="form-group has-feedback">
+                                <label class="col-lg-3 control-label">พยาน</label>
+                                <div class="col-lg-3">
+                                    <input type="text" class="form-control" id="company" value="" >
+                                </div>
+                                <label class="col-lg-3 control-label">ผู้บริหาร</label>
+                                <div class="col-lg-3">
+                                    <input type="text" class="form-control" id="date_po" value="" >
+                                </div>
+                            </div>
+
+                            <br>
+                            <br>
+                            <hr>	
+                    </div>
+                    <div align="right" id="footage_btn">
+                            <hr>
+                    </div>
+                    
+				</div>
+            </div>
+        </div>
+		
+	    <!-- End Our Clients -->
+
+
+        <!-- Javascripts -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="../js/jquery-1.9.1.min.js"><\/script>')</script>
+        <script src="../js/bootstrap.min.js"></script>
+		
+		<!-- Scrolling Nav JavaScript -->
+		<script src="../js/jquery.easing.min.js"></script>
+        <script src="../js/scrolling-nav.js"></script>		
+
+        
+        
+        <script>
+            //Global variable
+            var id = 0;
+            var old_amount = 0;
+            var List = [];
+            $("#header").load("../header.html");
+            var currentdate = new Date();
+                        var datetime =   currentdate.getFullYear() + "-"
+                                    + currentdate.getMonth()  + "-" 
+                                    + currentdate.getDate();
+            document.getElementById("date").value = datetime
+
+
+            function print_table() {
+                var tmp="";
+                var total = 0;
+                List.forEach(function (element, i) {
+                    total += parseInt(element.asset_value);
+                    tmp += `
+                                <tr>
+                                <td><center><label><input type="checkbox" value="`+ i + `"><span class="text"></span></label></center></th>
+                                <td><center>`+ (i + 1) + `</center></td>
+                                <td><center>`+ element.asset_name +`</center></td>
+                                <td><center>`+ element.asset_value +`</center></td>
+                                </tr>`;
+                });
+                $("#new_data").empty();
+                $("#new_data").append(tmp);
+                calculate_total(total);
+            }
+
+            async function check_value(_id,_amount){
+                if(List[_id] == null) {
+                    return;
+                } else {
+                    console.log(_id)
+                    List[_id].loanleft += parseFloat(_amount);
+                    check_value(++_id,_amount);
+                }
+            }
+
+            function calculate_total(_value){
+                var rate = $("#promotion_rate").val();
+                var interest = parseFloat(_value)*(rate/100);
+                var total = _value+interest;
+                $("#total").val(total);
+            }
+
+            function alertStatement(link) {
+                var url = new URL(link);
+                id = parseInt(url.searchParams.get("id"));
+                if(id !== null){
+                    $.getJSON("../../api/requestlist/" + id , function(data) {
+                        console.log(data)
+                        var currentdate = new Date(data.date);
+                        var datetime =   currentdate.getFullYear() + "-"
+                                    + currentdate.getMonth()  + "-" 
+                                    + currentdate.getDate();
+                        $("#id").val(data.id);
+                        $("#date").val(data.date)
+                        $("#promotion_id").val(data.promotion_id);
+                        if(data.listapprove == "S") {
+                            var item = ""
+                            item = `
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" id="update_btn">Update</button>
+                                    <a href="../RequestList/request_listview.html" class="btn">ย้อนกลับ</a>`;
+                            $("#footage_btn").append(item)
+                        } else if(data.listapprove == "W") {
+                        var item = ""
+                        item = `<a href="#" id="approve_btn" class="btn">Approve</a>
+                                <a href="#" id="disapprove_btn" class="btn">Aisapprove</a>
+                                <a href="../RequestList/request_listview.html" class="btn">ย้อนกลับ</a>`;
+                            $("#footage_btn").append(item)
+                        } else {
+                            alert("ระบบผิดพลาด")
+                            return location.reload();
+                        }
+                        getCustomerName(data.customers_id)
+                        request_promotion(data.promotion_id)
+                    });
+                } else {
+                    $("#old_data").hide();
+                    console.log("not have id")
+                }
+            }
+
+            function load_old_amount() {
+                $.getJSON("../../api/loan/" + id , function(data) {
+                           old_amount = parseInt(data.amount);
+                });
+            }
+
+            function getCustomerName(id) {
+                $.getJSON("../../api/customer/" + id , function(data) {
+                           var item = "";
+                           item = `
+                            <label class="col-lg-3 control-label">ชื่อลูกค้า</label>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control" id="fname" value="`+data.firstname+`" readonly>
+                            </div>
+                            <label class="col-lg-3 control-label">นามสกุล</label>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control" id="lname" value="`+data.surname+`" readonly>
+                            </div>
+                        `;
+                        $("#customer").append(item);
+                });
+            }
+
+            function request_promotion(id) {
+                $.getJSON("../../api/promotion/" + id , function(data) {
+                        $("#promotion_rate").val(data.rate);
+                        $("#promotion_duration").val(data.duration);
+                });
+            }
+
+            $( document ).ready(function() {
+               alertStatement(window.location.href);
+               load_old_amount();
+
+               //Add List button 
+               $("#add_list").click(function () {
+                   var currentdate = new Date(); 
+                   var datetime =   currentdate.getFullYear() + "-"
+                                    + (currentdate.getMonth()+1)  + "-" 
+                                    + currentdate.getDate();
+                        List.push({
+                            status: 'S',
+                            promotion_id:1,
+                            date:currentdate
+                        });
+                       print_table();
+                       $.post("../../api/requestlist",List[0]).done(function(data) { 
+                           
+                        console.log(data.id)
+                        $.getJSON("../../users/profile",).done(function(val) {
+                            
+                            $.post("../../api/requestlist_has_customers",{requestlist_id:data.id,customers_id:val}).done(function(data) {
+})
+})       
+                        })
+                      
+               });
+
+               //for remove list
+                $("#remove_list").click(async function () {
+                    var id = $("#new_data input:checked").map(function () {
+                        return $(this).attr("value")
+                    }).get()
+                    if (id.length != 0) {
+                        for (var count = id.length; count > 0; count--) {
+                            console.log("from remove list : " + id[count])
+                            old_amount += parseFloat(List[id[count - 1]].amount)
+                            await check_value(id[count - 1],List[id[count - 1]].amount)
+                            List.splice(id[count - 1], 1)
+                        }
+                        print_table()
+                    }
+                    else return
+                });
+
+               //Save Button
+               $("#save_btn").click(async function () {
+                   create_moneyStock = function (_id,_amount,_idLoan) {
+                       return new Promise(resolve => {
+                           $.post("../../api/moneystockGetLast" , {
+                               id:null,
+                               amount:_amount,
+                               typeStock_id:1,
+                               loanlist_id:_id,
+                               loanlist_id_fromloan:_idLoan
+                           })
+                           resolve();
+                       })
+                   }
+
+                   await save_list();
+                   await update_loan();
+                   location.reload();
+               })
+
+               
+            });
+
+            $(window).load(function() {
+                $("#update_btn").click(async function () {
+                   console.log("test")
+                    save_list = function() {
+                       return new Promise(resolve =>{
+                           List.forEach(function ( element) {
+                                $.post("../../api/loanlist/" ,{
+                                    id:null,
+                                    name:element.asset_name,
+                                    cost:element.asset_value,
+                                    request_list_id:parseInt($("#id").val())
+                                },function(data){
+                                    // create_moneyStock(data.id,element.amount,data.loan_id);
+                                });
+                           });
+                           resolve();
+                       })
+                   }
+
+
+
+                   update_request = function () {
+                       return new Promise(resolve => {
+                           $.post("../../api/requestUpdate/" + $("#id").val(), {
+                               id: parseInt($("#id").val()),
+                               amount:$("#total").val(),
+                               listapprove:"W"
+                           },function(status){
+                               alert(status)
+                           })
+                           resolve();
+                       })
+                   }
+
+                   await update_request();
+                //    await save_list();
+               })
+            });
+
+
+        </script>

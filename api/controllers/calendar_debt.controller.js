@@ -1,7 +1,46 @@
 const db = require('../index')
 
-exports.findAll = (req, res) => {
-    db.calendar_debt.findAll({include: [ { model: db.typeStock, as: 'type' }] } ).then(stock => res.json(stock))
+exports.findAll = async (req, res) => {
+    var List =[];
+    db.loan.findAll()
+    .then(async stock => {
+        var custom = 0
+        stock.forEach(element => {
+            var currentdate = new Date();
+            var MonthDiff = currentdate - element.time;
+            var mvalue = new Date(MonthDiff);
+            if( mvalue.getMonth() > 0 ){
+                console.log(element.id)
+                db.customersList.findAll({where: {loan_id :element.id}})
+                    .then(e =>
+                    {
+                        console.log("test e : " + e.length)
+                        custom += e.length
+                        e.forEach(o => {
+                            console.log("test o : " + o.customers_id)
+                            db.customers.findById(o.customers_id).then(tmp =>
+                            {
+                                console.log("test tmp : " + tmp.id)
+
+                                List.push({
+                                    id:tmp.id,
+                                    firstname:tmp.firstname,
+                                    time:element.time,
+                                    phone:tmp.phone
+                                });
+                                console.log("Test push " + List.length)
+                                // res.json(List)
+                                if (List.length === custom) {
+                                    res.json(List)
+                                }
+                            });
+                        })
+                    }       
+                )
+            }
+        })
+
+    }).then()
 }
 
 

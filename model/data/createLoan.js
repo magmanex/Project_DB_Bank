@@ -30,8 +30,8 @@ var loan = [
                     debt_id:2},
                 {
                     id:2,
-                    status:"ครบแล้วมั้ง",
-                    amount:2000,
+                    status:"ครบ",
+                    amount:0,
                     interestrate:7,
                     totalamount:3400,
                     time:"2017-06-15",

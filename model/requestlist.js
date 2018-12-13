@@ -6,10 +6,10 @@ module.exports = (sequelize, type) => {
           autoIncrement: true
 
         },
-        asset: type.STRING,
         amount: type.FLOAT,
         date: type.DATE,
-        listapprove : type.BOOLEAN
+        listapprove : type.STRING,
+        meetingdate : type.DATE
        
     },{
         tableName: 'requestlist',
